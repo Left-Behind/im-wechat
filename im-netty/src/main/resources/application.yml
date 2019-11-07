@@ -1,0 +1,15 @@
+server:
+  port: 9001  #这里的端口要换，启动两个不同的服务
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/ #pom.xml添加spring-boot-starter-thymeleaf依赖
+  redis:
+    host: www.azhu.work
+    port: 16379
+    password:
+  session:
+    store-type: redis # spring session使用存储类型
+
+##################################自定义参数############################
+netty:
+  port: 8070 #分号:后面要加空格 否则报错 Could not resolve placeholder 'netty.port'
