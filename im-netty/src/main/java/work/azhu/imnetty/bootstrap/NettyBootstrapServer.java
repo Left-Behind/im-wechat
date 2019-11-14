@@ -14,7 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
+import work.azhu.imnetty.common.utils.SpringUtils;
 
 import javax.annotation.Resource;
 
@@ -26,6 +28,7 @@ import javax.annotation.Resource;
  */
 @Slf4j
 @Component
+@DependsOn("SpringUtils")//控制bean初始化顺序SpringUtils先 NettyBootstrapServer加载
 public class NettyBootstrapServer implements Runnable{
 
     /**
@@ -35,16 +38,15 @@ public class NettyBootstrapServer implements Runnable{
      */
     //bossGroup 线程池则只是在 Bind 某个端口后，获得其中一个线程作为 MainReactor，
     // 专门处理端口的 Accept 事件，每个端口对应一个 Boss 线程、(接待线程池)
-    @Resource(name ="NioEventLoopGroup" )
-    private EventLoopGroup bossGroup;
+    //@Autowired
+    private EventLoopGroup bossGroup = SpringUtils.getBean("NioEventLoopGroup");
     //workerGroup 线程池会被各个 SubReactor 和 Worker 线程充分利用、(服务线程池)
-    @Resource(name ="NioEventLoopGroup" )
-    private EventLoopGroup workerGroup;
-
+    //@Autowired
+    private EventLoopGroup workerGroup = SpringUtils.getBean("NioEventLoopGroup");
     //Bootstrap 意思是引导，一个 Netty 应用通常由一个 Bootstrap 开始，
     // 主要作用是配置整个 Netty 程序，串联各个组件，Netty 中 Bootstrap 类是客户端程序的启动引导类，ServerBootstrap 是服务端启动引导类。
-    @Autowired
-    private ServerBootstrap serverBootstrap;
+   // @Autowired
+    private ServerBootstrap serverBootstrap=SpringUtils.getBean("ServerBootstrap");
 
     @Value("${netty,port}")
     private int port;
