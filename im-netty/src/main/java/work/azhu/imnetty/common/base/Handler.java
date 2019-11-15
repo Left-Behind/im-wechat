@@ -6,6 +6,7 @@ import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import work.azhu.imnetty.common.constant.LogConstant;
 
 /**
@@ -16,11 +17,9 @@ import work.azhu.imnetty.common.constant.LogConstant;
 @Slf4j
 public abstract class Handler extends SimpleChannelInboundHandler<Object> {
 
+    @Autowired
     HandlerApi handlerApi;
 
-    public Handler(HandlerApi handlerApi){
-        this.handlerApi = handlerApi;
-    }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {

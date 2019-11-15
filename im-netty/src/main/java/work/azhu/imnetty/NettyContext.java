@@ -2,9 +2,11 @@ package work.azhu.imnetty;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import work.azhu.imnetty.bootstrap.NettyBootstrapServer;
+import work.azhu.imnetty.config.ConfigFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -24,6 +26,15 @@ public class NettyContext {
 
     private Thread nettyThread;
 
+    @Value("${spring.redis.host}")
+    public  String RedisIP;
+
+    @Value("${netty.isDistributed}")
+    public  Boolean isDistributed;
+
+    @Value("${spring.redis.port}")
+    public  Integer redisPort;
+
     /**
      * 描述：Tomcat加载完ApplicationContext-main和netty文件后：
      *       启动Netty WebSocket服务器；
@@ -33,8 +44,18 @@ public class NettyContext {
     public void init() {
         nettyThread =new Thread(nettyBootstrapServer);
         log.info("开启独立线程，启动Netty WebSocket服务器...");
-        //logger.info( System.getProperty("user.dir"));
+        //logger.info( System.getProperty("user.dir"))
+        config();
         nettyThread.start();
+    }
+
+    /**
+     * 给配置工厂赋值
+     */
+    private void config() {
+        ConfigFactory.redisPort=redisPort;
+        ConfigFactory.redisIP=RedisIP;
+        ConfigFactory.isDistributed=isDistributed;
     }
     /**
      * 描述：Tomcat服务器关闭前需要手动关闭Netty Websocket相关资源，否则会造成内存泄漏。

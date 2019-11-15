@@ -2,8 +2,10 @@ package work.azhu.imnetty.bootstrap.channel;
 
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.FullHttpMessage;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.springframework.stereotype.Service;
 import work.azhu.imnetty.common.base.HandlerService;
+import work.azhu.imnetty.common.constant.ChatConstant;
 
 import java.util.Map;
 
@@ -36,6 +38,11 @@ public class HandlerServiceImp extends HandlerService {
 
     @Override
     public boolean login(Channel channel, Map<String, Object> map) {
+
+        String token=(String)map.get(ChatConstant.TOKEN);
+        if (/*inChatVerifyService.verifyToken(token)*/true){
+            return true;
+        }
         return false;
     }
 

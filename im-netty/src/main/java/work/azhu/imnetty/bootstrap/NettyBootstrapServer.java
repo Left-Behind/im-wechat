@@ -2,6 +2,7 @@ package work.azhu.imnetty.bootstrap;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -19,6 +20,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import work.azhu.imnetty.bootstrap.handler.DefaultHandler;
 import work.azhu.imnetty.common.constant.BootstrapConstant;
+import work.azhu.imnetty.common.utils.IpUtils;
+import work.azhu.imnetty.config.ConfigFactory;
+import work.azhu.imnetty.config.RedisConfig;
 
 /**
  * @Author Azhu
@@ -52,8 +56,11 @@ public class NettyBootstrapServer implements Runnable{
 
     private ChannelFuture serverChannelFuture;
 
+
+
     @Override
     public void run() {
+
         build();
     }
 
@@ -85,7 +92,14 @@ public class NettyBootstrapServer implements Runnable{
                             ch.pipeline().addLast(defaultHandler);
                         }
                     });
-            serverChannelFuture = serverBootstrap.bind(port).sync();
+            serverChannelFuture = serverBootstrap.bind(port).sync().addListener((ChannelFutureListener) channelFuture -> {
+                if (channelFuture.isSuccess()) {
+                    log.info("服务端启动成功【" + IpUtils.getHost() + ":" + ConfigFactory.redisPort + "】");
+                    ConfigFactory.address = IpUtils.getHost()+":"+ ConfigFactory.redisPort;
+                    RedisConfig.getInstance();
+                }else{
+                    log.info("服务端启动失败【" + IpUtils.getHost() + ":" + ConfigFactory.redisPort + "】");}
+            });
         }catch (Exception e) {
             log.info(e.getMessage());
             bossGroup.shutdownGracefully();
