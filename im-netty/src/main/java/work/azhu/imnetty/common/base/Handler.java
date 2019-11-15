@@ -24,17 +24,19 @@ public abstract class Handler extends SimpleChannelInboundHandler<Object> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+
         if (msg instanceof TextWebSocketFrame){
-            log.info("TextWebSocketFrame"+msg);
+            log.info("TextWebSocketFrame--->"+msg);
             textdoMessage(ctx,(TextWebSocketFrame)msg);
         }else if (msg instanceof WebSocketFrame){
-            log.info("WebSocketFrame"+msg);
+            log.info("WebSocketFrame--->"+msg);
             webdoMessage(ctx,(WebSocketFrame)msg);
         }else if (msg instanceof FullHttpRequest){
-            log.info("FullHttpRequest"+msg);
+            log.info("FullHttpRequest--->"+msg);
             httpdoMessage(ctx,(FullHttpRequest)msg);
         }else {
-            log.info("channelRead0---没有找到适合的消息类型");
+            log.info("msg.type: "+msg.getClass());
+            log.info("channelRead0--->没有找到适合的消息类型");
         }
 
     }

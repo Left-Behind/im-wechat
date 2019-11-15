@@ -10,6 +10,9 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import work.azhu.imnetty.common.base.Handler;
 import work.azhu.imnetty.common.base.HandlerApi;
 import work.azhu.imnetty.common.base.HandlerService;
@@ -26,9 +29,11 @@ import java.util.Map;
  */
 @Slf4j
 @ChannelHandler.Sharable
+@Component
 public class DefaultHandler extends Handler {
 
-    private final HandlerApi handlerApi;
+
+    private  final HandlerApi handlerApi;
 
     public DefaultHandler(HandlerApi handlerApi) {
         super(handlerApi);
@@ -39,6 +44,7 @@ public class DefaultHandler extends Handler {
     protected void webdoMessage(ChannelHandlerContext ctx, WebSocketFrame msg) {
         Channel channel = ctx.channel();
         HandlerService httpHandlerService;
+        log.info("handlerApi == "+handlerApi);
         if (handlerApi instanceof HandlerService){
             httpHandlerService = (HandlerService)handlerApi;
         }else {
