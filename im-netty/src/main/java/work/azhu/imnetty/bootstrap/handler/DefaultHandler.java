@@ -69,6 +69,8 @@ public class DefaultHandler extends Handler {
                 break;
             //发送消息给某人
             case ChatConstant.SENDTO:
+                log.info(LogConstant.DefaultWebSocketHandler_SENDTO);
+                handlerApi.sendToText(ctx.channel(),maps);
                 break;
             //发送消息到群组
             case ChatConstant.SENDGROUP:

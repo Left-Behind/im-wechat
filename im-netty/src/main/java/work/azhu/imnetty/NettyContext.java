@@ -27,7 +27,7 @@ public class NettyContext {
     private Thread nettyThread;
 
     @Value("${spring.redis.host}")
-    public  String RedisIP;
+    public  String redisIP;
 
     @Value("${netty.isDistributed}")
     public  Boolean isDistributed;
@@ -54,7 +54,7 @@ public class NettyContext {
      */
     private void config() {
         ConfigFactory.redisPort=redisPort;
-        ConfigFactory.redisIP=RedisIP;
+        ConfigFactory.redisIP=redisIP;
         ConfigFactory.isDistributed=isDistributed;
     }
     /**
