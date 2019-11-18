@@ -5,7 +5,7 @@
     <groupId>work.azhu</groupId>
     <artifactId>im-wechat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging><!--这个可以被子项目基础-->
 
     <modules>
         <module>im-common</module>
@@ -76,13 +76,14 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <!--spring-boot-maven-plugin打包出来的jar是不可依赖的
+        <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 
 </project>
