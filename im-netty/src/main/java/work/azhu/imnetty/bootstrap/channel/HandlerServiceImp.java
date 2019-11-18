@@ -5,9 +5,11 @@ import com.google.gson.Gson;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.FullHttpMessage;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import work.azhu.imnetty.bootstrap.backmsg.InChatBackMapService;
+import work.azhu.imnetty.bootstrap.channel.http.HttpChannelService;
 import work.azhu.imnetty.bootstrap.channel.ws.WsChannelService;
 import work.azhu.imnetty.common.base.HandlerService;
 import work.azhu.imnetty.common.constant.ChatConstant;
@@ -21,6 +23,7 @@ import java.util.Map;
  * @Description
  */
 @Service
+@Slf4j
 public class HandlerServiceImp extends HandlerService {
 
     @Resource
@@ -28,6 +31,10 @@ public class HandlerServiceImp extends HandlerService {
 
     @Resource
     private WsChannelService wsChannelService;
+
+    @Resource
+    private HttpChannelService httpChannelService;
+
     @Override
     public void getList(Channel channel) {
 
@@ -80,8 +87,8 @@ public class HandlerServiceImp extends HandlerService {
             //发送给对方--在线
             Channel other = wsChannelService.getChannel(otherOne);
             if (other == null){
-                //转http分布式
-               // httpChannelService.sendInChat(otherOne,inChatBackMapService.getMsg(token,value));
+                log.info(" ----------->转http分布式");
+               httpChannelService.sendInChat(otherOne,inChatBackMapService.getMsg(token,value));
             }else{
                 other.writeAndFlush(new TextWebSocketFrame(
                         JSONObject.toJSONString(inChatBackMapService.getMsg(token,value))));
