@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: dubbo-consumer
+server:
+  port: 9004
+
+dubbo:
+  application:
+    name: dubbo-consumer
+  protocol:
+    name: dubbo
+    port: 20880
+  registry:
+    address: zookeeper://www.azhu.work:2181
+  consumer:
+    timeout: 5000
+demo:
+  service:
+    version: 1.0.0
+
+

@@ -3,6 +3,10 @@
   <component name="Encoding" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/im-common" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/im-database" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/im-netty" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/im-netty/src/main/resources/application.yml" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/im-web" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

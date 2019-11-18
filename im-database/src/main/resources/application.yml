@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: dubbo-provider
+server:
+  port: 9005
+
+dubbo:
+  application:
+    name: dubbo-provider
+  protocol:
+    name: dubbo
+    port: 20880
+  registry:
+    address: zookeeper://www.azhu.work:2181
+  provider:
+    timeout: 5000
+demo:
+  service:
+    version: 1.0.0
+
+

@@ -10,6 +10,8 @@
     <modules>
         <module>im-common</module>
         <module>im-netty</module>
+        <module>im-database</module>
+        <module>im-web</module>
     </modules>
 
     <name>im-wechat</name>
