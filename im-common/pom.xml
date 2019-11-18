@@ -5,6 +5,12 @@
     <groupId>work.azhu</groupId>
     <artifactId>im-common</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
+    <parent>
+        <groupId>work.azhu</groupId>
+        <artifactId>im-wechat</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
     <packaging>jar</packaging>
 
     <name>im-common</name>
