@@ -20,6 +20,6 @@ public  class ConfigFactory {
 
     public static String address;
 
-
+    public static Integer nettyPort;
 
 }

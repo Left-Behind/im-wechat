@@ -35,6 +35,10 @@ public class NettyContext {
     @Value("${spring.redis.port}")
     public  Integer redisPort;
 
+    @Value("${netty.port}")
+    private Integer nettyPort;
+
+
     /**
      * 描述：Tomcat加载完ApplicationContext-main和netty文件后：
      *       启动Netty WebSocket服务器；
@@ -43,9 +47,10 @@ public class NettyContext {
     // @PostConstruct注解的方法将会在依赖注入完成后被自动调用
     public void init() {
         nettyThread =new Thread(nettyBootstrapServer);
-        log.info("开启独立线程，启动Netty WebSocket服务器...");
+
         //logger.info( System.getProperty("user.dir"))
         config();
+        log.info("开启独立线程，启动Netty WebSocket服务器...");
         nettyThread.start();
     }
 
@@ -56,6 +61,7 @@ public class NettyContext {
         ConfigFactory.redisPort=redisPort;
         ConfigFactory.redisIP=redisIP;
         ConfigFactory.isDistributed=isDistributed;
+        ConfigFactory.nettyPort=nettyPort;
     }
     /**
      * 描述：Tomcat服务器关闭前需要手动关闭Netty Websocket相关资源，否则会造成内存泄漏。

@@ -84,7 +84,7 @@ public class NettyBootstrapServer implements Runnable{
                             // 把HTTP头、HTTP体拼成完整的HTTP请求
                             ch.pipeline().addLast(BootstrapConstant.AGGREGATOR, new HttpObjectAggregator(65536));
                             // 方便大文件传输，不过实质上都是短的文本数据
-                            ch.pipeline().addLast(BootstrapConstant.HTTP_CHUNKED, new ChunkedWriteHandler());
+                            ch.pipeline().addLast(BootstrapConstant.CHUNKEDWRITE, new ChunkedWriteHandler());
                             //处理Http请求，主要是完成HTTP协议到Websocket协议的升级
                             ch.pipeline().addLast(BootstrapConstant.WEBSOCKETHANDLER,new WebSocketServerProtocolHandler("/ws"));
                             //绑定I/O事件的处理类-->DefaultHandler
@@ -94,11 +94,11 @@ public class NettyBootstrapServer implements Runnable{
                     });
             serverChannelFuture = serverBootstrap.bind(port).sync().addListener((ChannelFutureListener) channelFuture -> {
                 if (channelFuture.isSuccess()) {
-                    log.info("服务端启动成功【" + IpUtils.getHost() + ":" + ConfigFactory.redisPort + "】");
-                    ConfigFactory.address = IpUtils.getHost()+":"+ ConfigFactory.redisPort;
+                    log.info("服务端启动成功【" + IpUtils.getHost() + ":" + port + "】");
+                    ConfigFactory.address = IpUtils.getHost()+":"+ port;
                     RedisConfig.getInstance();
                 }else{
-                    log.info("服务端启动失败【" + IpUtils.getHost() + ":" + ConfigFactory.redisPort + "】");}
+                    log.info("服务端启动失败【" + IpUtils.getHost() + ":" + port + "】");}
             });
         }catch (Exception e) {
             log.info(e.getMessage());

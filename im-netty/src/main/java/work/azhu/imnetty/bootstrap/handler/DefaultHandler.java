@@ -10,16 +10,21 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import work.azhu.imcommon.model.bean.netty.vo.SendServerVO;
 import work.azhu.imnetty.bootstrap.channel.HandlerServiceImp;
 import work.azhu.imnetty.common.base.Handler;
 import work.azhu.imnetty.common.base.HandlerApi;
 import work.azhu.imnetty.common.base.HandlerService;
 import work.azhu.imnetty.common.constant.ChatConstant;
+import work.azhu.imnetty.common.constant.HttpConstant;
 import work.azhu.imnetty.common.constant.LogConstant;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Map;
 import com.alibaba.fastjson.JSON;
+import work.azhu.imnetty.common.utils.HttpUtil;
+
 /**
  * @Author Azhu
  * @Date 2019/11/14 17:54
@@ -52,7 +57,38 @@ public class DefaultHandler extends Handler {
 
     @Override
     protected void httpdoMessage(ChannelHandlerContext ctx, FullHttpRequest msg) {
-
+        switch (HttpUtil.checkType(msg)){
+            case HttpConstant.GETSIZE:
+                log.info(LogConstant.DEFAULTWEBSOCKETHANDLER_GETSIZE);
+                handlerApi.getSize(ctx.channel());
+                break;
+            case HttpConstant.SENDFROMSERVER:
+                log.info(LogConstant.DEFAULTWEBSOCKETHANDLER_SENDFROMSERVER);
+                SendServerVO serverVO = null;
+                try {
+                    serverVO = HttpUtil.getToken(msg);
+                } catch (UnsupportedEncodingException e) {
+                    log.error(e.getMessage());
+                }
+                handlerApi.sendFromServer(ctx.channel(),serverVO);
+                break;
+            case HttpConstant.GETLIST:
+                log.info(LogConstant.DEFAULTWEBSOCKETHANDLER_GETLIST);
+                handlerApi.getList(ctx.channel());
+                break;
+            case HttpConstant.SENDINCHAT:
+                //分布式消息发送
+                log.info(LogConstant.DEFAULTWEBSOCKETHANDLER_SENDINCHAT);
+                handlerApi.sendInChat(ctx.channel(),msg);
+                break;
+            case HttpConstant.NOTFINDURI:
+                log.info(LogConstant.DEFAULTWEBSOCKETHANDLER_NOTFINDURI);
+                handlerApi.notFindUri(ctx.channel());
+                break;
+            default:
+                System.out.println("未匹配"+msg);
+                break;
+        }
     }
 
     @Override

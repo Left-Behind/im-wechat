@@ -36,7 +36,7 @@ public class WsCacheMap {
      */
     private final static Boolean isDistributed = ConfigFactory.isDistributed;
 
-    private final static String address = "";
+    private final static String address = ConfigFactory.address;
 
     /**
      * 存储链接

@@ -1,6 +1,5 @@
 package work.azhu.imnetty.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +22,20 @@ public class IndexController {
 
     @GetMapping("/index")
     public String index(){
-        System.out.println("访问 ---> ws://www.azhu.work:8070/ws");
-        return "chat70";
+        System.out.println("访问 ---> ws://www.azhu.work:"+nettyPort+"/ws");
+        return "chat"+nettyPort;
     }
 
     @RequestMapping("/getNettyPort")
     @ResponseBody
     public String getSession() {
         return "当前Netty服务器监听端口：" + nettyPort;
+    }
+
+
+    @RequestMapping("/chat")
+    public String chatromm() {
+        return "chat"+nettyPort ;
     }
 
 }

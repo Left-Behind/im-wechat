@@ -5,9 +5,12 @@ import com.google.gson.Gson;
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.FullHttpMessage;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
+import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import work.azhu.imcommon.model.bean.netty.SendInChat;
+import work.azhu.imcommon.model.bean.netty.vo.SendServerVO;
 import work.azhu.imnetty.bootstrap.backmsg.InChatBackMapService;
 import work.azhu.imnetty.bootstrap.channel.http.HttpChannelService;
 import work.azhu.imnetty.bootstrap.channel.ws.WsChannelService;
@@ -46,8 +49,17 @@ public class HandlerServiceImp extends HandlerService {
     }
 
     @Override
-    public void sendInChat(Channel channel, FullHttpMessage msg) {
+    public void sendFromServer(Channel channel, SendServerVO sendServerVO) {
+        httpChannelService.sendFromServer(channel,sendServerVO);
+    }
 
+    @Override
+    public void sendInChat(Channel channel, FullHttpMessage msg) {
+        System.out.println(msg);
+        String content = msg.content().toString(CharsetUtil.UTF_8);
+        Gson gson = new Gson();
+        SendInChat sendInChat = gson.fromJson(content, SendInChat.class);
+        httpChannelService.sendByInChat(channel,sendInChat);
     }
 
     @Override
@@ -80,7 +92,7 @@ public class HandlerServiceImp extends HandlerService {
         String otherOne = (String) maps.get(ChatConstant.ONE);
         String value = (String) maps.get(ChatConstant.VALUE);
         String token = (String) maps.get(ChatConstant.TOKEN);
-        //返回给自己
+        //返回给自己 这里可以移除，看前端怎么设置
         channel.writeAndFlush(new TextWebSocketFrame(
                 JSONObject.toJSONString(inChatBackMapService.sendBack(otherOne,value))));
         if (wsChannelService.hasOther(otherOne)){

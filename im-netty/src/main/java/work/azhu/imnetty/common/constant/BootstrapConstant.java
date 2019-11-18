@@ -17,7 +17,7 @@ public class BootstrapConstant {
 
     public static final String HTTP_HANDLER="http-handler";
 
-    public static final String WEBSOCKETHANDLER = "websockethandler";
+    public static final String WEBSOCKETHANDLER = "webSocketHandler";
 
     public static final String SSL = "ssl";
 }

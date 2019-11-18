@@ -2,6 +2,7 @@ package work.azhu.imnetty.common.base;
 
 import io.netty.channel.Channel;
 import io.netty.handler.codec.http.FullHttpMessage;
+import work.azhu.imcommon.model.bean.netty.vo.SendServerVO;
 
 import java.util.Map;
 
@@ -26,9 +27,10 @@ public abstract class HandlerService implements HandlerApi {
 
     /**
      * HTTP以服务端向指定用户发送通知
-     * @param channel {@link Channel} 链接实例
-     * @param sendServerVO {@link SendServerVO} 用户标识
-    public abstract void sendFromServer(Channel channel,SendServerVO sendServerVO);*/
+     * @param channel 链接实例
+     * @param sendServerVO
+     */
+    public abstract void sendFromServer(Channel channel, SendServerVO sendServerVO);
 
     /**
      * HTTP以服务端处理发送
