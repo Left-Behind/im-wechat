@@ -18,4 +18,22 @@ demo:
   service:
     version: 1.0.0
 
+custom:
+  datasource:
+    names: write,read1,read2
+    write:
+      url: jdbc:mysql://www.azhu.work:13306/wechat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
+      username: root
+      password: root
+    read1:
+      url: jdbc:mysql://www.azhu.work:13307/wechat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
+      username: readOnly
+      password: readOnly
+    read2:
+      url: jdbc:mysql://www.azhu.work:13308/wechat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
+      username: readOnly
+      password: readOnly
 
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: work.azhu.imdatabase.model
