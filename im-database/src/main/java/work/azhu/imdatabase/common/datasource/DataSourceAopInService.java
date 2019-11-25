@@ -17,9 +17,10 @@ import org.springframework.stereotype.Component;
 @ConditionalOnClass({DruidDataSource.class})
 public class DataSourceAopInService implements PriorityOrdered {
 
-    @Before("execution(* work.azhu.imdatabase.service..*.find*(..)) "
+    @Before("!@annotation(work.azhu.imdatabase.common.annotation.Master) "
+            + " && (execution(* work.azhu.imdatabase.service..*.find*(..)) "
             + " || execution(* work.azhu.imdatabase.service..*.get*(..)) "
-            + " || execution(* work.azhu.imdatabase.service..*.query*(..))")
+            + " || execution(* work.azhu.imdatabase.service..*.query*(..)))")
     public void setReadDataSourceType() {
         //如果已经开启写事务了，那之后的所有读都从写库读
        // if(!DataSourceType.write.getType().equals(DataSourceContextHolder.getReadOrWrite())){
@@ -30,7 +31,8 @@ public class DataSourceAopInService implements PriorityOrdered {
 
     }
 
-    @Before("execution(* work.azhu.imdatabase.service..*.insert*(..)) "
+    @Before("@annotation(work.azhu.imdatabase.common.annotation.Master) "
+            + " || execution(* work.azhu.imdatabase.service..*.insert*(..)) "
             + " || execution(* work.azhu.imdatabase.service..*.update*(..))"
             + " || execution(* work.azhu.imdatabase.service..*.add*(..))"
             + " || execution(* work.azhu.imdatabase.service..*.del*(..))"

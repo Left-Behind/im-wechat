@@ -2,6 +2,7 @@ package work.azhu.imdatabase.mapper;
 
 
 
+import org.apache.ibatis.annotations.Mapper;
 import work.azhu.imdatabase.model.UserInfo;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * @Date: 2019/5/1 17:43
  * Description:
  */
+@Mapper
 public interface UserInfoMapper {
 
 

@@ -1,12 +1,12 @@
 spring:
   application:
-    name: dubbo-provider
+    name: dubbo-provider-imdatabase
 server:
   port: 9005
 
 dubbo:
   application:
-    name: dubbo-provider
+    name: dubbo-provider-imdatabase
   protocol:
     name: dubbo
     port: 20880
