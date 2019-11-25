@@ -110,7 +110,7 @@ public class DruidDataSourceProperties {
     /**
      * 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
      */
-    private String filters;
+    private String filters ="stat";
 
     /**
      * 配置timeBetweenLogStatsMillis>0之后，DruidDataSource会定期把监控数据输出到日志中。单位毫秒
