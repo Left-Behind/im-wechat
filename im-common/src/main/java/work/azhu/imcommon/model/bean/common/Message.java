@@ -10,7 +10,7 @@ import java.util.Date;
  * @Description: 消息类
  */
 @Data
-public class message {
+public class Message {
 
     private Long id;
 
