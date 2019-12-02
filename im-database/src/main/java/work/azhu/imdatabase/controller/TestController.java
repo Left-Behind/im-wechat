@@ -32,6 +32,7 @@ public class TestController {
         user.setAvatarUrl("www.azhu.work");
         userInfoService.insertUserDetail(user);
         log.info(userInfoService.queryUserDetailById("1").toString());
+        log.info(userInfoService.queryUserDetailById("1").toString());
         return "中勒";
     }
     @RequestMapping("/test2")
@@ -42,6 +43,16 @@ public class TestController {
         log.info(userInfoService.queryUserDetailById("1").toString());
         return "中勒";
     }
+
+    @RequestMapping("/test3")
+    public String Master(){
+        log.info(userInfoService.queryUserDetailById("1").toString());
+        log.info(userInfoService.queryUserDetailByIdMaster("2").toString());
+        log.info(userInfoService.queryUserDetailByIdMaster("3").toString());
+        log.info(userInfoService.queryUserDetailByIdMaster("4").toString());
+        return "中勒";
+    }
+
 
 
 

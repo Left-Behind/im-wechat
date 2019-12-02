@@ -45,4 +45,11 @@ public interface UserDetailService {
      * @return
      */
     Integer insertUserDetail(User userInfo);
+
+    /**
+     * 使用注解强制使用读库
+     * @param id
+     * @return
+     */
+    User queryUserDetailByIdMaster(String id);
 }

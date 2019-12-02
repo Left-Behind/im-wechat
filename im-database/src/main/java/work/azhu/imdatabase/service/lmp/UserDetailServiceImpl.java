@@ -3,6 +3,7 @@ package work.azhu.imdatabase.service.lmp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import work.azhu.imcommon.model.bean.common.User;
+import work.azhu.imdatabase.common.annotation.Master;
 import work.azhu.imdatabase.mapper.UserDetailMapper;
 import work.azhu.imdatabase.service.UserDetailService;
 
@@ -42,5 +43,11 @@ public class UserDetailServiceImpl implements UserDetailService {
     @Override
     public Integer insertUserDetail(User userInfo) {
         return userDetailMapper.insertUserDetail(userInfo);
+    }
+
+    @Master
+    @Override
+    public User queryUserDetailByIdMaster(String id) {
+        return userDetailMapper.queryUserDetailById(id);
     }
 }
