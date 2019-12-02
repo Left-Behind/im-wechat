@@ -37,3 +37,9 @@ custom:
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: work.azhu.*.model
+logging:
+  level:
+    work:
+      azhu:
+        imdatabase:
+          mapper: debug
