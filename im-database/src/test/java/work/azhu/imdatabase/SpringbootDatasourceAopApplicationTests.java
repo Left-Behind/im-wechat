@@ -1,14 +1,16 @@
 package work.azhu.imdatabase;
 
 import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.test.context.junit4.SpringRunner;
+import work.azhu.imcommon.model.bean.common.User;
 import work.azhu.imdatabase.model.UserInfo;
-import work.azhu.imdatabase.service.UserInfoService;
+import work.azhu.imdatabase.service.UserDetailService;
 
 import java.util.List;
 
@@ -16,36 +18,39 @@ import java.util.List;
 @SpringBootTest
 @EnableDubbo
 @EnableHystrix
+@Slf4j
 public class SpringbootDatasourceAopApplicationTests {
 
     @Autowired
-    private UserInfoService userInfoService;
+    private UserDetailService userInfoService;
 
     @Test
     public void contextLoads() {
     }
-    @Test
-    public void queryAllUserInfoList() throws InterruptedException {
-        List<UserInfo> list=userInfoService.queryAllUserInfo();
-        for (UserInfo userInfo : list) {
-            System.out.println(userInfo.toString());
-        }
-        UserInfo userInfo=userInfoService.queryUserInfoByUserId(1);
-        UserInfo userInfo1=userInfoService.queryUserInfoByUserId(2);
-        userInfo.setUserName("www.azhu.work");
-        userInfo.setUserId(8);
-        userInfo.setPassword("sdfsdfasd");
-        userInfo.setEmail("sdfdsf");
-        userInfo.setAvatarUrl("12315646489");
-        Integer insert=userInfoService.insertUserInfo(userInfo);
-        userInfo1=userInfoService.queryUserInfoByUserId(3);
-        Integer update=userInfoService.updateUserInfo(userInfo);
-        //Thread.sleep(500);
-        userInfo1=userInfoService.queryUserInfoByUserId(4);
 
-    }
     @Test
-    public void DEL(){
-        userInfoService.deleteUserInfoById(6);
+    public void imwechat() {
+        List<User> list = userInfoService.queryUserDetailList();
+        list.stream().forEach(
+                item -> {
+                    log.info(item.toString());
+                    //System.out.println(item.toString());
+                }
+        );
+        User user = new User();
+        user.setUserName("Azhu");
+        user.setPassword("123");
+        user.setEmail("2576419596");
+        user.setAvatarUrl("www.azhu.work");
+        userInfoService.insertUserDetail(user);
+        list = userInfoService.queryUserDetailList();
+        list.stream().forEach(
+                item -> {
+                    log.info(item.toString());
+                    //System.out.println(item.toString());
+                }
+        );
+        log.info(userInfoService.queryUserDetailById("1").toString());
+        log.info(userInfoService.queryUserDetailById("2").toString());
     }
 }

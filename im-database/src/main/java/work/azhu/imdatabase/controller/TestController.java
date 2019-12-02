@@ -1,10 +1,12 @@
 package work.azhu.imdatabase.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import work.azhu.imcommon.model.bean.common.User;
 import work.azhu.imdatabase.model.UserInfo;
-import work.azhu.imdatabase.service.UserInfoService;
+import work.azhu.imdatabase.service.UserDetailService;
 
 import java.util.List;
 
@@ -13,29 +15,38 @@ import java.util.List;
  * @Date 2019/11/25 19:22
  * @Description
  */
-@Controller
+@RestController
+@Slf4j
 public class TestController {
 
     @Autowired
-    private UserInfoService userInfoService;
+    private UserDetailService userInfoService;
 
     @RequestMapping("/test")
-    public void test(){
-        List<UserInfo> list=userInfoService.queryAllUserInfo();
-        for (UserInfo userInfo : list) {
-            System.out.println(userInfo.toString());
-        }
-        UserInfo userInfo=userInfoService.queryUserInfoByUserId(1);
-        UserInfo userInfo1=userInfoService.queryUserInfoByUserId(2);
-        userInfo.setUserName("www.azhu.work");
-        userInfo.setUserId(8);
-        userInfo.setPassword("sdfsdfasd");
-        userInfo.setEmail("sdfdsf");
-        userInfo.setAvatarUrl("12315646489");
-        Integer insert=userInfoService.insertUserInfo(userInfo);
-        userInfo1=userInfoService.queryUserInfoByUserId(3);
-        Integer update=userInfoService.updateUserInfo(userInfo);
-        //Thread.sleep(500);
-        userInfo1=userInfoService.queryUserInfoByUserId(4);
+    public String test(){
+        log.info(userInfoService.queryUserDetailById("1").toString());
+        User user = new User();
+        user.setUserName("Azhu");
+        user.setPassword("123");
+        user.setEmail("2576419596");
+        user.setAvatarUrl("www.azhu.work");
+        userInfoService.insertUserDetail(user);
+        log.info(userInfoService.queryUserDetailById("1").toString());
+        return "中勒";
+    }
+    @RequestMapping("/test2")
+    public String test2(){
+        log.info(userInfoService.queryUserDetailById("1").toString());
+        log.info(userInfoService.queryUserDetailById("1").toString());
+        log.info(userInfoService.queryUserDetailById("1").toString());
+        log.info(userInfoService.queryUserDetailById("1").toString());
+        return "中勒";
+    }
+
+
+
+    @RequestMapping("/test1")
+    public String test1(){
+       return "测试Jrebelsssss";
     }
 }

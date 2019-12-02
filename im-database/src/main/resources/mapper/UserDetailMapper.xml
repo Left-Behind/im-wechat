@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="work.azhu.imdatabase.mapper.UserDetailMapper">
+
+
+    <insert id="insertUserDetail" parameterType="work.azhu.imcommon.model.bean.common.User">
+        insert into user (userName,password,avatarUrl,email) values (#{userName},#{password},#{avatarUrl},#{email})
+    </insert>
+
+    <delete id="deleteUserDetailById">
+        DELETE FROM user WHERE id=#{id}
+    </delete>
+
+    <update id="updateUserDetailById">
+        UPDATE user
+        SET updateTime = UNIX_TIMESTAMP(now())
+        <if test="userName !=null and userName !=''">
+            ,userName = #{userName}
+        </if>
+        <if test="password !=null and password !=''">
+            ,password = #{password}
+        </if>
+        <if test="email !=null and email !=''">
+            ,email = #{email}
+        </if>
+        <if test="avatarUrl !=null and avatarUrl !=''">
+            ,avatarUrl = #{avatarUrl}
+        </if>
+        WHERE id=#{id}
+    </update>
+
+    <select id="queryUserDetailList" resultType="work.azhu.imcommon.model.bean.common.User">
+        SELECT * FROM user
+    </select>
+
+    <select id="queryUserDetailById" resultType="work.azhu.imcommon.model.bean.common.User">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+</mapper>
