@@ -1,6 +1,7 @@
 package work.azhu.imdatabase.common.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 //@EnableAspectJAutoProxy(exposeProxy=true,proxyTargetClass=true)
 @Component
 @ConditionalOnClass({DruidDataSource.class})
+@Slf4j
 public class DataSourceAopInService implements PriorityOrdered {
 
     @Before("!@annotation(work.azhu.imdatabase.common.annotation.Master) "
@@ -23,11 +25,10 @@ public class DataSourceAopInService implements PriorityOrdered {
             + " || execution(* work.azhu.imdatabase.service..*.query*(..)))")
     public void setReadDataSourceType() {
         //如果已经开启写事务了，那之后的所有读都从写库读
-       // if(!DataSourceType.write.getType().equals(DataSourceContextHolder.getReadOrWrite())){
+        if(!DataSourceType.write.getType().equals(DataSourceContextHolder.getReadOrWrite())){
             DataSourceContextHolder.setRead();
-            System.out.println("如果已经开启写事务了，那之后的所有读都从写库读");
-            System.out.println("读库"+DataSourceContextHolder.getLocal().get());
-       // }
+            log.info("当前数据库类型: 读库"+DataSourceContextHolder.getLocal().get());
+        }
 
     }
 
@@ -40,7 +41,9 @@ public class DataSourceAopInService implements PriorityOrdered {
             + " || execution(* work.azhu.imdatabase.service..*.create*(..))")
     public void setWriteDataSourceType() {
         DataSourceContextHolder.setWrite();
-        System.out.println("写库"+DataSourceContextHolder.getLocal().get());
+        //这里有个小问题,只要一个请求了使用到了写库,后面的操作都会在写库操作,除非调用另一个请求
+        log.info("如果已经开启写事务了，那之后的所有读都从写库读");
+        log.info("当前数据库类型: 写库"+DataSourceContextHolder.getLocal().get());
     }
 
     @Override

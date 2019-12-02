@@ -75,13 +75,14 @@ public class DataSourceConfiguration {
             Object dsKey = dsName.startsWith(readPrefix) ? readCnt++ : writePrefix;
             targetDataSources.put(dsKey, druidDataSource);
         }
-        System.out.println("所有读库数据源数量"+readCnt);
+        log.info("所有读库数据源数量: "+readCnt);
         MyAbstractRoutingDataSource dataSource = new MyAbstractRoutingDataSource(readCnt);
         // 管理所有的数据源
         dataSource.setTargetDataSources(targetDataSources);
         // 默认数据源（找不到数据源的时候使用）
         dataSource.setDefaultTargetDataSource(targetDataSources.get(writePrefix));
         log.info("-------------------- MyAbstractRoutingDataSource inited successfull ---------------------");
+        log.info("------------------------------------ 数据源初始化成功  -------------------------------------");
         return dataSource;
     }
 
@@ -142,8 +143,11 @@ public class DataSourceConfiguration {
     }
 
 
-    //配置Druid的监控
-    //配置一个管理后台的Servlet
+    /**
+     * 配置Druid的监控
+     * 配置一个管理后台的Servlet
+     * @return
+     */
     @Bean
     public ServletRegistrationBean statViewServlet() {
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
