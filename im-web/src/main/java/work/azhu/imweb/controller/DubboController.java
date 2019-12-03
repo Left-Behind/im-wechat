@@ -31,5 +31,8 @@ public class DubboController {
         return dubboService.welcome();
     }
 
-
+    @RequestMapping("/hello")
+    public String hello() {
+        return "Azhu,hello";
+    }
 }

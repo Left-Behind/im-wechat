@@ -61,13 +61,20 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.0.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:5.0.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.0.8.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.0.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.0.8.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.boot:dubbo-spring-boot-starter:0.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:dubbo:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.20.0-GA" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.netty:netty:3.2.5.Final" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.boot:dubbo-spring-boot-autoconfigure:0.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.kafka:spring-kafka:2.1.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.0.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-messaging:5.0.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.0.8.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.retry:spring-retry:1.2.2.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.kafka:kafka-clients:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.lz4:lz4-java:1.4" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial.snappy:snappy-java:1.1.4" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-framework:4.0.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.curator:curator-client:4.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:20.0" level="project" />

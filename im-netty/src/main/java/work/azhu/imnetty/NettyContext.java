@@ -48,7 +48,7 @@ public class NettyContext {
     public void init() {
         nettyThread =new Thread(nettyBootstrapServer);
 
-        //logger.info( System.getProperty("user.dir"))
+        //logger.info( System.getProperty("User.dir"))
         config();
         log.info("开启独立线程，启动Netty WebSocket服务器...");
         nettyThread.start();

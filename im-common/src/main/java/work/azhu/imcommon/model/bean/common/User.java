@@ -10,7 +10,7 @@ import java.util.Date;
  * @Description: 用户类
  */
 @Data
-public class user {
+public class User {
 
     /**账号*/
     private String id;

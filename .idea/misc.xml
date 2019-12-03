@@ -5,9 +5,9 @@
       <list>
         <option value="$PROJECT_DIR$/im-common/pom.xml" />
         <option value="$PROJECT_DIR$/im-netty/pom.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/im-database/pom.xml" />
         <option value="$PROJECT_DIR$/im-web/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
