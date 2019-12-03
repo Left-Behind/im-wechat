@@ -42,7 +42,7 @@ dubbo:
     name: dubbo-provider-netty
   protocol:
     name: dubbo
-    port: 20880
+    port: 20881
   registry:
     address: zookeeper://www.azhu.work:2181
   provider:

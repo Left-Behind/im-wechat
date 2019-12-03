@@ -1,12 +1,11 @@
 package work.azhu.imweb.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import work.azhu.imcommon.DubboService;
+import work.azhu.imcommon.service.DubboServiceDatabase;
+import work.azhu.imcommon.service.DubboServiceNetty;
 
 
 /**
@@ -18,21 +17,27 @@ import work.azhu.imcommon.DubboService;
 public class DubboController {
 
     @Reference(version = "${demo.service.version}")
-    private DubboService dubboService;
+    private DubboServiceDatabase dubboServiceDatabase;
+
+    @Reference(version = "${demo.service.version}")
+    private DubboServiceNetty dubboServiceNetty;
 
 
-    @RequestMapping("/sayHello/{name}")
-    public String sayHello(@PathVariable("name") String name) {
-        return dubboService.sayHello(name);
+    @RequestMapping("/database/t/{name}")
+    public String testDubbo(@PathVariable("name") String name) {
+        return dubboServiceDatabase.testDubbo(name);
+    }
+    @RequestMapping("/database/test")
+    public String testDubbo() {
+        return dubboServiceDatabase.testDubbo();
     }
 
-    @RequestMapping("/welcome")
-    public String welcome() {
-        return dubboService.welcome();
+    @RequestMapping("/netty/t/{name}")
+    public String testDubboNetty(@PathVariable("name") String name) {
+        return dubboServiceNetty.testDubbo(name);
     }
-
-    @RequestMapping("/hello")
-    public String hello() {
-        return "Azhu,hello";
+    @RequestMapping("/netty/test")
+    public String testDubboNetty() {
+        return dubboServiceNetty.testDubbo();
     }
 }
