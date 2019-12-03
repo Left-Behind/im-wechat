@@ -5,7 +5,7 @@
     <groupId>work.azhu</groupId>
     <artifactId>im-wechat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging><!--这个可以被子项目基础-->
+    <packaging>pom</packaging><!--这个可以被子项目继承-->
 
     <modules>
         <module>im-common</module>
@@ -45,7 +45,11 @@
             <artifactId>dubbo-spring-boot-starter</artifactId>
             <version>${dubbo.starter.version}</version>
         </dependency>
-
+        <!--kafka依赖-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-framework</artifactId>
