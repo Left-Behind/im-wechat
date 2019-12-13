@@ -70,7 +70,7 @@ public class CookieUtil {
         }
     }
     /***
-     * 获得cookie的主域名，本系统为gmall.com，保存时使用
+     * 获得cookie的主域名，
      * @param request
      * @return
      */

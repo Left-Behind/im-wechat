@@ -1,4 +1,9 @@
 spring:
+  #配置静态资源不拦截
+  resources:
+    static-locations: classpath:/
+    mvc:
+      static-path-pattern: /**
   application:
     name: dubbo-consumer
   kafka:

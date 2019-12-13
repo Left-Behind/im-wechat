@@ -34,5 +34,9 @@ public class TestJwt {
         System.out.println("64="+map1);
 
 
+        Map<String,Object> map2= JwtUtil.decode(encode,"2019gmall0105",ip + time);
+
+        String reslut =JSON.toJSONString(map2);
+
     }
 }
