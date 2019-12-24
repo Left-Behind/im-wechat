@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @Author Azhu
  * @Date 2019/11/7 16:45
@@ -36,6 +38,24 @@ public class IndexController {
     @RequestMapping("/chat")
     public String chatromm() {
         return "chat"+nettyPort ;
+    }
+
+    @RequestMapping("/getIp")
+    @ResponseBody
+    public String getIp(HttpServletRequest request){
+
+        System.out.println(request.getHeader("x-forwarded-for"));
+
+        System.out.println(request.getRemoteAddr());
+        return "sss";
+    }
+    @RequestMapping("/8070")
+    public String html8070(){
+        return "chat8070";
+    }
+    @RequestMapping("/8090")
+    public String html8090(){
+        return "chat8090";
     }
 
 }
