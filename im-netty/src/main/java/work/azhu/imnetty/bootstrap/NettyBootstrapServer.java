@@ -93,12 +93,12 @@ public class NettyBootstrapServer implements Runnable{
                         }
                     });
             serverChannelFuture = serverBootstrap.bind(port).sync().addListener((ChannelFutureListener) channelFuture -> {
-                if (channelFuture.isSuccess()) {
-                    log.info("服务端启动成功【" + IpUtils.getHost() + ":" + port + "】");
-                    ConfigFactory.address = IpUtils.getHost()+":"+ port;
-                    RedisConfig.getInstance();
-                }else{
-                    log.info("服务端启动失败【" + IpUtils.getHost() + ":" + port + "】");}
+            if (channelFuture.isSuccess()) {
+                log.info("服务端启动成功【" + IpUtils.getHost() + ":" + port + "】");
+                ConfigFactory.address = IpUtils.getHost()+":"+ port;
+                RedisConfig.getInstance();
+            }else{
+                log.info("服务端启动失败【" + IpUtils.getHost() + ":" + port + "】");}
             });
         }catch (Exception e) {
             log.info(e.getMessage());

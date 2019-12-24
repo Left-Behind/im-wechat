@@ -95,6 +95,8 @@ public class DefaultHandler extends Handler {
     protected void textdoMessage(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
         //将json格式小时存入Map对象
         Map<String,Object> maps = (Map) JSON.parse(msg.text());
+        System.out.println("输出msg信息");
+        System.out.println(maps.toString());
         //添加消息时间戳
         maps.put(ChatConstant.TIME, new Date());
         switch((String)maps.get(ChatConstant.TYPE)){
@@ -121,6 +123,7 @@ public class DefaultHandler extends Handler {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        log.info("远程ip: "+ctx.channel().remoteAddress());
         log.info(LogConstant.CHANNELACTIVE+ctx.channel().remoteAddress().toString()+LogConstant.CHANNEL_SUCCESS);
     }
 
