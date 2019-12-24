@@ -24,6 +24,7 @@ public abstract class Handler extends SimpleChannelInboundHandler<Object> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
 
+
         if (msg instanceof TextWebSocketFrame){
             log.info("TextWebSocketFrame--->"+msg);
             textdoMessage(ctx,(TextWebSocketFrame)msg);
@@ -53,7 +54,7 @@ public abstract class Handler extends SimpleChannelInboundHandler<Object> {
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        log.info(LogConstant.CHANNELINACTIVE+ctx.channel().localAddress().toString()+LogConstant.CLOSE_SUCCESS);
+        log.info(LogConstant.CHANNELINACTIVE+ctx.channel().remoteAddress().toString()+LogConstant.CLOSE_SUCCESS);
         try {
             handlerApi.close(ctx.channel());
         }catch (Exception e){
