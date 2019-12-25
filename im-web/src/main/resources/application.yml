@@ -1,9 +1,10 @@
 spring:
-  #配置静态资源不拦截
+  thymeleaf:
+    prefix: classpath:/templates/
   resources:
     static-locations: classpath:/
-    mvc:
-      static-path-pattern: /**
+  mvc:
+    static-path-pattern: classpath:/**
   application:
     name: dubbo-consumer
   kafka:
