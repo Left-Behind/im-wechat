@@ -1,10 +1,8 @@
 spring:
-  thymeleaf:
-    prefix: classpath:/templates/
   resources:
     static-locations: classpath:/
   mvc:
-    static-path-pattern: classpath:/**
+    static-path-pattern: /**
   application:
     name: dubbo-consumer
   kafka:
