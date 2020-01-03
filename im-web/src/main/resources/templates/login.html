@@ -19,15 +19,15 @@
             </div>
             <h3>Welcome to WeChat</h3>
             <p>
-                基于ssm+netty的在线聊天系统
+                IM即时通讯系统
             </p>
             <p>Login in. To see it in action.</p>
             <form class="m-t" role="form" action="index.html">
                 <div class="form-group">
-                    <input type="text" id="username" class="form-control" placeholder="Username" required="">
+                    <input type="text" id="userName" class="form-control" placeholder="用户名" required="">
                 </div>
                 <div class="form-group">
-                    <input type="password" id="password" class="form-control" placeholder="Password" required="">
+                    <input type="password" id="password" class="form-control" placeholder="密码" required="">
                 </div>
                 <button type="button" class="btn btn-primary block full-width m-b" onclick="login()">Login</button>
 
@@ -51,32 +51,37 @@
         </div>
     </div>
     <!-- Mainly scripts -->
-    <script src="static/js/common/jquery-1.9.1.min.js"></script>
-    <script src="static/js/common/bootstrap.min.js"></script>
+    <script src="../static/js/common/jquery-1.9.1.min.js"></script>
+    <script src="../static/js/common/bootstrap.min.js"></script>
 
 </body>
 <script type="text/javascript">
     function login() {
+        var param={
+            "userName": $("#userName").val(),
+            "password": $("#password").val()
+        };
         $.ajax({
-            type: 'POST',
-            url: 'login',
-            dataType: 'json',
-            data: {
-                username: $("#username").val(),
-                password: $("#password").val()
-            },
+            type: "POST",
+            url: "login",
+            data: JSON.stringify(param),
+            contentType:"application/json;charsetset=UTF-8", //必要 不加报 415
+            dataType: "json",//必要 这个没测出来不加有什么影响
             async: false,
             success: function (data) {
-                if (data.status == 200) {
+                if (data.success) {
                     //alert("转到聊天室界面");
+                    console.log(data.result);
                     window.location.href = "chatroom";
                     //console.log("转到聊天室界面");
+
                 } else {
                     alert(data.msg);
                 }
             }
         });
     }
+
     function getPassword() {
         //console.info($("#username").val());
         if( $("#username").val()==""){
@@ -87,6 +92,8 @@
             type: 'POST',
             url: 'sendPasswordMail',
             dataType: 'json',
+            contentType:"application/json;charsetset=UTF-8", //必要
+            dataType:"json",//必要
             data: {
                 username: $("#username").val(),
             },
