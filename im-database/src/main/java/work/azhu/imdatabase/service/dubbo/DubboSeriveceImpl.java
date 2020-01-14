@@ -1,4 +1,4 @@
-package work.azhu.imdatabase;
+package work.azhu.imdatabase.service.dubbo;
 
 import com.alibaba.dubbo.config.annotation.Service;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
