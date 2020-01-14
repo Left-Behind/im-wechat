@@ -15,13 +15,13 @@ public class Message {
     private Long id;
 
     /**发送者*/
-    private String fromUserId;
+    private Integer fromUserId;
 
     /**接收者*/
-    private String toUserId;
+    private Integer toUserId;
 
     /**接收群组*/
-    private String toGroupId;
+    private Integer toGroupId;
 
     /**消息文本*/
     private String content;

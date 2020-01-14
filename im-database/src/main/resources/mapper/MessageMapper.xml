@@ -6,10 +6,9 @@
     <insert id="insertMessage" parameterType="work.azhu.imcommon.model.bean.common.Message">
       INSERT INTO
         message
-        (id, fromUserId,toUserId, toGroupId, content, type, createTime)
+        (fromUserId,toUserId,toGroupId,content,type)
         VALUES
-        (#{id}, #{id}, #{id}, #{id}, #{id}, #{id}, Un);
-
+        (#{fromUserId},#{toUserId},#{toGroupId},#{content},#{type});
     </insert>
 
 </mapper>
