@@ -5,120 +5,117 @@
     <title>IM-WeChat即时通讯系统</title>
     <link rel="icon" href="../static/img/chat.ico" type="image/x-icon"/>
     <link rel="stylesheet" type="text/css" href="../static/css/chatroom.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/index.css">
     <link rel="stylesheet" type="text/css" href="../static/css/common/layui.css">
     <link rel="stylesheet" type="text/css" href="../static/css/common/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../static/css/common/fileinput.min.css">
 </head>
-<body>
-<div class="qqBox">
-    <div class="BoxHead">
-        <div class="headImg">
-            <img id="avatarUrl" src=""/>
+<body background="../static/img/bg.jpg" style="background-repeat:no-repeat;background-size:cover; ">
+<div id="app">
+    <div role="alert" class="el-notification left" style="top: 16px; z-index: 2000;">
+        <i class="el-notification__icon el-icon-success"></i>
+        <div class="el-notification__group is-with-icon">
+            <h2 class="el-notification__title">系统信息</h2>
+            <div class="el-notification__content">
+                <p>
+                    在线用户： 1
+                    <br>
+                    开源地址：<a href="https://github.com/Left-Behind/im-wechat" target="_blank">im-wechat</a>
+                    <br>
+                    作者：<a href="https://www.tycoding.cn/" target="_blank">Azhu</a>
+                    <br>
+                    <button class="logout" onclick="logout()">注销</button>
+                    <br>
+                </p>
+            </div>
         </div>
-        <div id="username" class="internetName"></div>
-        <button class="close logout" onclick="logout()">&times;</button>
     </div>
-    <div class="context">
-        <div class="conLeft">
+    <div class="sidebar">
+        <div class="card">
+            <header>
+                <img class="avatar" width="40" height="40" :alt="" :src="">
+                <p class="name">Azhu</p>
+            </header>
+            <footer>
+                <input class="search" type="text" placeholder="search user...">
+            </footer>
+        </div>
+        <div class="list">
             <ul>
+                <li :class="{ active: current_window_id === 0 }" @click="selectWindow(0)">
+                    <img class="avatar" width="30" height="30" src="../static/img/avatar/Group01.jpg">
+                    <p class="name">官方群组</p>
+                </li>
 
             </ul>
         </div>
-        <div class="conRight">
-            <div class="Righthead">
-                <div class="headName"></div>
-            </div>
-            <div class="RightCont">
-                <ul class="newsList-temp"></ul>
-                <ul class="newsList">
+    </div>
+    <div class="main">
+        <div class="message" ref="box">
+            <!--<ul>
+                <li v-for="item in messageList">
+                    <p class="time">
+                        <span>时间</span>
+                    </p>
+                    <div :class="'main ' +  (item.from.id == form.id ? 'self': '')">
+                        <img class="avatar" width="30" height="30" :src="item.from.avatar"/>
+                        <span class="main-name">{{item.from.name}}</span>
+                        <div class="text">{{item.message}}</div>
+                    </div>
+                </li>
+            </ul>-->
+        </div>
 
+        <div class="RightFoot">
+            <div class="emjon">
+                <ul>
+                    <li><img src="../static/img/emoji/emoji_01.png"></li>
+                    <li><img src="../static/img/emoji/emoji_02.png"></li>
+                    <li><img src="../static/img/emoji/emoji_03.png"></li>
+                    <li><img src="../static/img/emoji/emoji_04.png"></li>
+                    <li><img src="../static/img/emoji/emoji_05.png"></li>
+                    <li><img src="../static/img/emoji/emoji_06.png"></li>
+                    <li><img src="../static/img/emoji/emoji_07.png"></li>
+                    <li><img src="../static/img/emoji/emoji_08.png"></li>
+                    <li><img src="../static/img/emoji/emoji_09.png"></li>
+                    <li><img src="../static/img/emoji/emoji_10.png"></li>
+                    <li><img src="../static/img/emoji/emoji_11.png"></li>
+                    <li><img src="../static/img/emoji/emoji_12.png"></li>
+                    <li><img src="../static/img/emoji/emoji_13.png"></li>
+                    <li><img src="../static/img/emoji/emoji_14.png"></li>
+                    <li><img src="../static/img/emoji/emoji_15.png"></li>
+                    <li><img src="../static/img/emoji/emoji_16.png"></li>
+                    <li><img src="../static/img/emoji/emoji_17.png"></li>
+                    <li><img src="../static/img/emoji/emoji_18.png"></li>
+                    <li><img src="../static/img/emoji/emoji_19.png"></li>
+                    <li><img src="../static/img/emoji/emoji_20.png"></li>
+                    <li><img src="../static/img/emoji/emoji_21.png"></li>
+                    <li><img src="../static/img/emoji/emoji_22.png"></li>
+                    <li><img src="../static/img/emoji/emoji_23.png"></li>
+                    <li><img src="../static/img/emoji/emoji_24.png"></li>
                 </ul>
             </div>
-            <div class="RightFoot">
-                <div class="emjon">
-                    <ul>
-                        <li><img src="../static/img/emoji/emoji_01.png"></li>
-                        <li><img src="../static/img/emoji/emoji_02.png"></li>
-                        <li><img src="../static/img/emoji/emoji_03.png"></li>
-                        <li><img src="../static/img/emoji/emoji_04.png"></li>
-                        <li><img src="../static/img/emoji/emoji_05.png"></li>
-                        <li><img src="../static/img/emoji/emoji_06.png"></li>
-                        <li><img src="../static/img/emoji/emoji_07.png"></li>
-                        <li><img src="../static/img/emoji/emoji_08.png"></li>
-                        <li><img src="../static/img/emoji/emoji_09.png"></li>
-                        <li><img src="../static/img/emoji/emoji_10.png"></li>
-                        <li><img src="../static/img/emoji/emoji_11.png"></li>
-                        <li><img src="../static/img/emoji/emoji_12.png"></li>
-                        <li><img src="../static/img/emoji/emoji_13.png"></li>
-                        <li><img src="../static/img/emoji/emoji_14.png"></li>
-                        <li><img src="../static/img/emoji/emoji_15.png"></li>
-                        <li><img src="../static/img/emoji/emoji_16.png"></li>
-                        <li><img src="../static/img/emoji/emoji_17.png"></li>
-                        <li><img src="../static/img/emoji/emoji_18.png"></li>
-                        <li><img src="../static/img/emoji/emoji_19.png"></li>
-                        <li><img src="../static/img/emoji/emoji_20.png"></li>
-                        <li><img src="../static/img/emoji/emoji_21.png"></li>
-                        <li><img src="../static/img/emoji/emoji_22.png"></li>
-                        <li><img src="../static/img/emoji/emoji_23.png"></li>
-                        <li><img src="../static/img/emoji/emoji_24.png"></li>
-                    </ul>
-                </div>
-                <div class="footTop">
-                    <ul>
-                        <li class="ExP">
-                            <img src="../static/img/emoji.jpg">
-                        </li>
-                        <li class="file-upload">
-                            <a data-toggle="modal" data-target="#upload-modal" data-backdrop="static">
-                                <img src="../static/img/upload.jpg">
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="inputBox">
-                    <input id="toUserId" type="hidden">
-                    <input id="toGroupId" type="hidden">
-                    <textarea id="dope" style="width: 99%;height: 75px; border: none;outline: none;" name="" rows=""
-                              cols=""></textarea>
-                    <button title="按下回车可发送" class="sendBtn">发送</button>
-                </div>
+            <div class="footTop">
+                <ul>
+                    <li class="ExP">
+                        <img src="../static/img/emoji.jpg">
+                    </li>
+                    <li class="file-upload">
+                        <a data-toggle="modal" data-target="#upload-modal" data-backdrop="static">
+                            <img src="../static/img/upload.jpg">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="inputBox">
+                <textarea id="dope" style="width: 99%;height: 75px; border: none;outline: none;" name="" rows=""
+                          cols=""></textarea>
+                <button title="按下回车可发送" class="sendBtn">发送</button>
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="upload-modal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button class="close" data-dismiss="modal">&times;</button>
-                    <h3 class="modal-title text-primary">文件上传</h3>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal">
-                        <div class="form-group">
-                            <label class="col-sm-3 control-label">选择文件</label>
-                            <div class="col-sm-9">
-                                <input type="file" name="file"
-                                       class="col-sm-9 myfile"/>
-                                <p class="help-block">注意：文件大小不超过30M，有效期为7天</p>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button id="upload-cancel" class="btn btn-sm btn-muted" data-dismiss="modal">
-                        <i class="glyphicon glyphicon-remove"></i> 取消
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="icon2">
-        <input placeholder="好友名称" id="findName" type="text"/>
-    </div>
-
-    <div class="clear"></div>
-    <input type="button" value="添加" onclick="find()"/>
+</div>
 
 </div>
 
@@ -135,7 +132,7 @@
     var sentMessageMap;
     var sentMessageMap_Group;
     var token;
-    token =getCookie("token");
+    token = getCookie("token");
     console.log(token);
     //setUserInfo();
     if (!window.WebSocket) {
