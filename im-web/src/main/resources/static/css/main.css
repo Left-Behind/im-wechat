@@ -17,7 +17,7 @@ body{
     color: #f4f4f4;
     background-color: #2e3238; }
 #app .sidebar .list {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 100%;
 }
   #app .main {
@@ -80,7 +80,7 @@ body{
 
 .message {
   padding: 10px 15px;
-  overflow-y: scroll; }
+  overflow-y: auto; }
   .message ul {
     margin-left: -40px; }
   .message li {

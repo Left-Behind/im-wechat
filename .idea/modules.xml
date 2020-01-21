@@ -4,9 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/im-common/im-common.iml" filepath="$PROJECT_DIR$/im-common/im-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/im-database/im-database.iml" filepath="$PROJECT_DIR$/im-database/im-database.iml" />
-      <module fileurl="file://$PROJECT_DIR$/im-database/im-database.iml" filepath="$PROJECT_DIR$/im-database/im-database.iml" />
       <module fileurl="file://$PROJECT_DIR$/im-netty/im-netty.iml" filepath="$PROJECT_DIR$/im-netty/im-netty.iml" />
-      <module fileurl="file://$PROJECT_DIR$/im-web/im-web.iml" filepath="$PROJECT_DIR$/im-web/im-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/im-web/im-web.iml" filepath="$PROJECT_DIR$/im-web/im-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/im-wechat.iml" filepath="$PROJECT_DIR$/im-wechat.iml" />
     </modules>

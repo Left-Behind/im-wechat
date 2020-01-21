@@ -33,7 +33,7 @@ spring:
       #在/usr/local/etc/kafka/consumer.properties中有配置
       group-id: test-consumer-group
 server:
-  port: 9004
+  port: 8765
 
 
 dubbo:

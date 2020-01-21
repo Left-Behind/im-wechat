@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import work.azhu.imcommon.common.BaseController;
 import work.azhu.imweb.util.CookieUtil;
 import work.azhu.imweb.util.JwtUtil;
 
@@ -25,7 +26,7 @@ import java.util.Map;
  * @Description
  */
 @Controller
-public class IndexController {
+public class IndexController extends BaseController {
 
     @Value("${jwt.key}")
     private String key;
@@ -36,7 +37,7 @@ public class IndexController {
     }
 
     @RequestMapping("chatroom")
-    public String chatroom(HttpServletRequest request, HttpServletResponse response){
+    public String chatroom(){
         String token=CookieUtil.getCookieValue(request,"token",true);
         System.out.println("token: "+token);
         return "templates/chatroom.html";
@@ -53,33 +54,21 @@ public class IndexController {
         map.put("userName",userName);
         map.put("password",password);
         map.put("timestamp",System.currentTimeMillis());
-        String ip =getIp(request);
-        System.out.println("ip: "+ip);
-        String jwtToken= JwtUtil.encode(key,map,ip);
-        CookieUtil.setCookie(request,response,"token",jwtToken,60*60*2,true);
-        return resSuccessJson(jwtToken);
+        String jwt=getJwt(key,map);
+        return resSuccessJson(jwt);
     }
 
-    public String getIp(HttpServletRequest request){
 
-        String ip= request.getHeader("x-forwarded-for");// 通过nginx转发的客户端ip
-        if(StringUtils.isBlank(ip)){
-            ip = request.getRemoteAddr();// 从request中获取ip
-            if(StringUtils.isBlank(ip)){
-                ip = "127.0.0.1";
-            }
-        }
+
+
+    @RequestMapping("test")
+    @ResponseBody
+    public String test(){
+        String ip=getIp();
+        System.out.println(ip);
         return ip;
     }
 
-    public String resSuccessJson(Object object) {
-        Map<String, Object> map = new HashMap<>();
-        map.put("success", true);
-        map.put("validate", true);
-        map.put("message","成功");
-        map.put("result", object);
-        map.put("time", new Date().getTime() / 1000);
-        return JSONObject.toJSONString(map);
-    }
+
 
 }
