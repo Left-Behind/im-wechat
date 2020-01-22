@@ -12,9 +12,7 @@ public class JwtUtil {
             key+=salt;
         }
         JwtBuilder jwtBuilder = Jwts.builder().signWith(SignatureAlgorithm.HS256,key);
-
         jwtBuilder = jwtBuilder.setClaims(param);
-
         String token = jwtBuilder.compact();
         return token;
 
@@ -41,9 +39,22 @@ public class JwtUtil {
         map.put("password","123");
         map.put("time",System.currentTimeMillis());
         String ip="localhost";
+        String jwt="";
         long start=System.currentTimeMillis();
-        String jwt=encode(key,map,ip);
+        for(int i=0;i<100;i++){
+            long start1=System.currentTimeMillis();
+            jwt=encode(key,map,ip);
+            long end1=System.currentTimeMillis();
+            System.out.println("加密时间："+(end1-start1));
+        }
         long end=System.currentTimeMillis();
-        System.out.println(end-start);
+        for(int i=1;i<100;i++){
+            start=System.currentTimeMillis();
+            Map<String,Object> claims=decode(jwt,key,ip);
+            end=System.currentTimeMillis();
+            System.out.println("解码时间："+(end-start));
+        }
+
+
     }
 }
