@@ -4,11 +4,19 @@
 
 
     <insert id="insertMessage" parameterType="work.azhu.imcommon.model.bean.common.Message">
-      INSERT INTO
-        message
-        (fromUserId,toUserId,toGroupId,content,type)
+        INSERT INTO
+        imwechat.message
+        (id, fromUserId, toUserId, toGroupId, content, type, fileUrl, originalFilename, createTime)
         VALUES
-        (#{fromUserId},#{toUserId},#{toGroupId},#{content},#{type});
+        (#{id}, #{fromUserId}, #{toUserId}, #{toGroupId}, #{content}, #{type}, #{fileUrl}, #{originalFilename}, UNIX_TIMESTAMP(NOW()));
     </insert>
+
+    <select id="queryMessageByUserId" resultType="work.azhu.imcommon.model.bean.common.Message">
+        SELECT * FROM imwechat.message WHERE fromUserId = #{userId} OR toUserId = #{userId}
+    </select>
+
+    <select id="queryMessageByGroupId" resultType="work.azhu.imcommon.model.bean.common.Message">
+        SELECT * FROM imwechat.message WHERE toGroupId = #{groupId}
+    </select>
 
 </mapper>

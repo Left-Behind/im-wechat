@@ -29,7 +29,13 @@ public class Message {
     /**消息类型*/
     private Integer type;
 
+    /**文件路径*/
+    private String fileUrl;
+
+    /**文件名*/
+    private String originalFilename;
+
     /**发送时间*/
-    private Date createTime;
+    private Long createTime;
 }
 

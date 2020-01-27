@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="work.azhu.imdatabase.mapper.UserDetailMapper">
+<mapper namespace="work.azhu.imdatabase.mapper.UserMapper">
 
 
     <insert id="insertUserDetail" parameterType="work.azhu.imcommon.model.bean.common.User">
-        insert into user (userName,password,avatarUrl,email) values (#{userName},#{password},#{avatarUrl},#{email})
+        INSERT INTO
+        imwechat.user
+        (id, userName, password, email, avatarUrl, createTime, updateTime, type, token)
+        VALUES
+        (#{id}, #{userName}, #{password}, #{email}, #{avatarUrl}, UNIX_TIMESTAMP(NOW()), UNIX_TIMESTAMP(NOW()), #{type}, #{token});
     </insert>
 
     <delete id="deleteUserDetailById">
@@ -35,5 +39,9 @@
 
     <select id="queryUserDetailById" resultType="work.azhu.imcommon.model.bean.common.User">
         SELECT * FROM user WHERE id=#{id}
+    </select>
+
+    <select id="queryUserByUserName" resultType="work.azhu.imcommon.model.bean.common.User">
+        SELECT * FROM user WHERE userName = #{userName}
     </select>
 </mapper>

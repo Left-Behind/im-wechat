@@ -13,7 +13,7 @@ import java.util.Date;
 public class User {
 
     /**账号*/
-    private String id;
+    private Long id;
 
     /**用户名*/
     private String userName;

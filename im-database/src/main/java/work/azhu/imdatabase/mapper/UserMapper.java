@@ -13,7 +13,7 @@ import java.util.List;
  * Description:
  */
 @Mapper
-public interface UserDetailMapper {
+public interface UserMapper {
 
 
     Integer insertUserDetail(User user);
@@ -40,5 +40,13 @@ public interface UserDetailMapper {
      * @return
      */
     Integer updateUserDetailById(User user);
+
+
+    /**
+     * 根据账号userName查询用户信息
+     * @param userName
+     * @return
+     */
+    User queryUserByUserName(String userName);
 
 }

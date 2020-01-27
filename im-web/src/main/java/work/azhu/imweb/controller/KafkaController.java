@@ -29,7 +29,7 @@ public class KafkaController {
         SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
         message.setId(idWorker.nextId());
         message.setContent("一条来自Web模块的kafka消息");
-        message.setCreateTime(new Date());
+        message.setCreateTime(System.currentTimeMillis());
         kafkaTemplate.send("web", message.toString());
         return "发送成功";
     }
