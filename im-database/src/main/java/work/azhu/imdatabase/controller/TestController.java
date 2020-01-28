@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import work.azhu.imcommon.model.bean.common.User;
-import work.azhu.imdatabase.model.UserInfo;
 import work.azhu.imdatabase.service.UserDetailService;
 
 import java.util.List;

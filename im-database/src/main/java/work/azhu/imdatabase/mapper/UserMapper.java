@@ -18,21 +18,25 @@ public interface UserMapper {
 
     Integer insertUserDetail(User user);
 
+    /**
+     * 查询所有用户
+     * @return
+     */
     List<User> queryUserDetailList();
 
     /**
-     * 根据账号id查询用户信息
-     * @param id
+     * 根据账号userId查询用户信息
+     * @param userId
      * @return
      */
-    User queryUserDetailById(String id);
+    User queryUserDetailById(String userId);
 
     /**
-     * 根据账号id删除用户
-     * @param id
+     * 根据账号userId删除用户
+     * @param userId
      * @return
      */
-    Integer deleteUserDetailById(String id);
+    Integer deleteUserDetailById(String userId);
 
     /**
      * 根据账号id修改用户信息
@@ -48,5 +52,12 @@ public interface UserMapper {
      * @return
      */
     User queryUserByUserName(String userName);
+
+    /**
+     * 判断是否第三方登录
+     * @param token
+     * @return
+     */
+    User queryUserByAccessToken(String token);
 
 }

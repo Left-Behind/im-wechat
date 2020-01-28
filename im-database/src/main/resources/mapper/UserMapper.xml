@@ -44,4 +44,8 @@
     <select id="queryUserByUserName" resultType="work.azhu.imcommon.model.bean.common.User">
         SELECT * FROM user WHERE userName = #{userName}
     </select>
+
+    <select id="queryUserByAccessToken" resultType="work.azhu.imcommon.model.bean.common.User">
+        SELECT * FROM user WHERE token = #{token}
+    </select>
 </mapper>

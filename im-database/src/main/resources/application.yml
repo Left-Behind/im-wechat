@@ -1,6 +1,6 @@
 spring:
   application:
-    name: dubbo-provider-imdatabase
+    name: dubbo-provider-im-database
   kafka:
     bootstrap-servers: www.azhu.work:9092
     #生产者的配置，大部分我们可以使用默认的，这里列出几个比较重要的属性
@@ -30,12 +30,12 @@ spring:
       group-id: test-consumer-group
 
 server:
-  port: 9008
+  port: 9004
 
 
 dubbo:
   application:
-    name: dubbo-provider-imdatabase
+    name: dubbo-provider-im-database
   protocol:
     name: dubbo
     port: 20880
