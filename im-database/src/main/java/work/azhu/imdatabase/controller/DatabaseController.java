@@ -37,7 +37,7 @@ public class DatabaseController extends BaseController {
         SnowflakeIdWorker idWorker = new SnowflakeIdWorker(2, 1);
         message.setId(idWorker.nextId());
         message.setContent("测试消息");
-        message.setFromUserId(1);
+        message.setFromUserId(1L);
         messageMapper.insertMessage(message);
 
         return "suceess";

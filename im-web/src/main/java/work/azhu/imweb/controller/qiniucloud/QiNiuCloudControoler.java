@@ -1,5 +1,6 @@
 package work.azhu.imweb.controller.qiniucloud;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.util.StringMap;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import work.azhu.imcommon.model.bean.common.User;
+import work.azhu.imcommon.service.DubboUserService;
 import work.azhu.imweb.config.qiniu.QiNiuProperties;
 import work.azhu.imweb.service.QiNiuService;
 
@@ -35,6 +38,9 @@ public class QiNiuCloudControoler {
 
     @Autowired
     private QiNiuProperties qiNiuProperties;
+
+    @Reference(version = "${demo.service.version}")
+    private DubboUserService dubboUserService;
 
     @RequestMapping(" index")
     public String index() {
@@ -70,6 +76,18 @@ public class QiNiuCloudControoler {
             System.out.println(key + "图片已删除...");
         }
         return map;
+
+    }
+
+
+
+    @ApiOperation(value="测试dubbo服务", notes="测试dubbo服务")
+    @RequestMapping(value = "/testDubbo",method = RequestMethod.GET)
+    @ResponseBody
+    public String testDubbo(){
+
+        User user=dubboUserService.queryUserByUserName("Left");
+        return user.getAvatarUrl();
 
     }
 

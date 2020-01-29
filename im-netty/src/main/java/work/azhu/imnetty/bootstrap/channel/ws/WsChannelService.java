@@ -16,9 +16,9 @@ public interface WsChannelService {
     /**
      * 登录成功存储到本地缓存
      * @param channel {@link Channel} 链接实例
-     * @param token {@link String} 用户标识
+     * @param userId {@link String} 用户标识
      */
-    void loginWsSuccess(Channel channel, String token);
+    void loginWsSuccess(Channel channel, String userId);
 
     /**
      * 判断是否存在当前在线用户

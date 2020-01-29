@@ -33,9 +33,9 @@ public class JmeterController {
         long id= idWorker.nextId();
         message.setId(id);
         message.setContent(uuid);
-        message.setToUserId(1);
-        message.setToGroupId(1);
-        message.setFromUserId(1);
+        message.setToUserId(1L);
+        message.setToGroupId(1L);
+        message.setFromUserId(1L);
         messageService.insertMessage(message);
         return  "ok";
 

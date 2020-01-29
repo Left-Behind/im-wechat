@@ -1,10 +1,14 @@
 package work.azhu.imcommon.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class JwtUtil {
 
     public static String encode(String key, Map<String,Object> param, String salt){
@@ -29,17 +33,23 @@ public class JwtUtil {
         } catch ( JwtException e) {
            return null;
         }
+        log.info("JWT解码数据");
+        log.info(JSON.toJSONString(claims, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteDateUseDateFormat));
         return  claims;
     }
 
     public static void main(String[] args) {
         String key="Azhu";
         Map<String,Object> map=new HashMap();
-        map.put("username","Azhu");
+        map.put("userName","Azhu");
         map.put("password","123");
         map.put("time",System.currentTimeMillis());
-        String ip="localhost";
+        System.out.println(JSON.toJSONString(map, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteDateUseDateFormat));
+        String ip="183.245.169.207";
         String jwt="";
+        System.out.println(encode(key,map,ip));
         long start=System.currentTimeMillis();
         for(int i=0;i<100;i++){
             long start1=System.currentTimeMillis();

@@ -39,7 +39,7 @@ spring:
 
 dubbo:
   application:
-    name: dubbo-provider-netty
+    name: dubbo-netty
   protocol:
     name: dubbo
     port: 20881
@@ -47,10 +47,12 @@ dubbo:
     address: zookeeper://www.azhu.work:2181
   provider:
     timeout: 5000
+  consumer:
+    timeout: 5000
 demo:
   service:
     version: 1.0.0
 
 netty:
-  port: 8070
+  port: 8090
   isDistributed: true

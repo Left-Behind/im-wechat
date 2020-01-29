@@ -8,6 +8,8 @@ package work.azhu.imnetty.common.constant;
 public class ChatConstant {
     public static final String TOKEN = "token";
 
+    public static final String IP = "ip";
+
     public static final String VALUE = "value";
 
     public static final String ONE = "one";
@@ -17,12 +19,15 @@ public class ChatConstant {
     public static final String ONLINE_GROUP = "online_group";
 
     public static final String GROUPID = "groupId";
+    public static final String TOGROUPID = "toGroupId";
 
     public static final String TYPE = "type";
 
     public static final String LOGIN = "login";
 
     public static final String SUCCESS = "success";
+
+    public static final String FAIL = "fail";
 
     public static final String TRUE = "true";
 
@@ -43,4 +48,19 @@ public class ChatConstant {
     public static final String SERVER = "server";
 
     public static final String LOGOUT = "logout";
+
+    /**接受消息者*/
+    public static final String TOUSERID = "toUserId";
+    /**消息文本*/
+    public static final String CONTENT = "content";
+    /**发送消息者*/
+    public static final String FROMUSERID = "fromUserId";
+
+    /**单体消息发送*/
+    public static final String SINGLE_SENDING = "SINGLE_SENDING";
+
+    /**群组消息发送*/
+    public static final String GROUP_SENDING = "GROUP_SENDING";
+
+
 }

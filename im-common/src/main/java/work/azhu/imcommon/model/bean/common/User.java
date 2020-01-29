@@ -2,6 +2,7 @@ package work.azhu.imcommon.model.bean.common;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Date;
  * @Description: 用户类
  */
 @Data
-public class User {
+public class User implements Serializable {
 
     /**账号*/
     private Long id;

@@ -87,7 +87,7 @@
         if (socket.readyState == WebSocket.OPEN) {
             var message = {
                 type: "login",
-                token: "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMyIsInRpbWUiOjE1ODAyODA4NzYzMjAsInVzZXJOYW1lIjoiTGVmdCJ9.004t8qqly5Cb8nIgkliHCWMgo33O0HlYkYx2yAhdjSA",
+                token: "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMyIsInRpbWUiOjE1ODAyOTI2MTI3MTMsInVzZXJOYW1lIjoiQmVoaW5kIn0.mJaO99iR5csX2yLBsQnVD6L1uo893U11ZV7fL3MoUCg",
                 ip: ip
             }
             socket.send(JSON.stringify(message));
@@ -102,9 +102,12 @@
         }
         if (socket.readyState == WebSocket.OPEN) {
             var message = {
-                type: "sendMe",
+                //type: "sendMe",
                 value: value,
-                token: "1111"
+                token: "1111",
+                type:"SINGLE_SENDING",
+                toUserId:"1",
+                content:value,
             }
             socket.send(JSON.stringify(message));
         } else {
@@ -118,10 +121,14 @@
         }
         if (socket.readyState == WebSocket.OPEN) {
             var message = {
-                type : "sendTo",
+                //type : "sendTo",
                 token : "1111",
                 value: value,
                 one: "2222",
+                type:"SINGLE_SENDING",
+                fromUserId:"2",
+                toUserId:"1",
+                content:value
             }
             socket.send(JSON.stringify(message));
         } else {
@@ -136,9 +143,12 @@
         if (socket.readyState == WebSocket.OPEN) {
             var message = {
                 type: "sendGroup",
-                groupId: "2",
+                groupId: "0",
                 token: "1111",
-                value: value
+                value: value,
+                type:"GROUP_SENDING",
+                toGroupId:"0",
+                content:value,
             }
             socket.send(JSON.stringify(message));
         } else {

@@ -58,4 +58,19 @@ public class IndexController {
         return "chat8090";
     }
 
+    @RequestMapping("/Azhu")
+    public String htmlAzhu(){
+        return "Azhu";
+    }
+
+    @RequestMapping("/Left")
+    public String htmlLeft(){
+        return "Left";
+    }
+
+    @RequestMapping("/Behind")
+    public String htmlBehind(){
+        return "Behind";
+    }
+
 }

@@ -40,13 +40,13 @@ public class WsCacheMap {
 
     /**
      * 存储链接
-     * @param token {@link String} 用户标签
+     * @param userId {@link String} 用户标签
      * @param channel {@link Channel} 链接实例
      */
-    public static void saveWs(String token,Channel channel){
-        maps.put(token,channel);
+    public static void saveWs(String userId,Channel channel){
+        maps.put(userId,channel);
         if (isDistributed){
-            jedis.set(token, RedisUtil.convertMD5(address,token));
+            jedis.set(userId, RedisUtil.convertMD5(address,userId));
         }
     }
 

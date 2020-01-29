@@ -72,3 +72,5 @@ logging:
       azhu:
         imdatabase:
           mapper: debug
+jwt:
+  key: Azhu
