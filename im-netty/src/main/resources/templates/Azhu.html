@@ -87,7 +87,7 @@
         if (socket.readyState == WebSocket.OPEN) {
             var message = {
                 type: "login",
-                token: "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMyIsInRpbWUiOjE1ODAyOTI4MTE0NzMsInVzZXJOYW1lIjoiQXpodSJ9.HN5pmnMuSHudcI3mQyEpvffkDb75uYDBqxKyvYMkqPM",
+                token: "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMyIsInRpbWUiOjE1ODAzNjQxNzkzNjAsInVzZXJOYW1lIjoiQXpodSJ9.QZHGNK2uiGjBOPAMBs63TBcmuek8Tt1Q6d5mlhbgH9s",
                 ip: ip
             }
             socket.send(JSON.stringify(message));
@@ -142,10 +142,11 @@
         }
         if (socket.readyState == WebSocket.OPEN) {
             var message = {
-                type: "sendGroup",
-                groupId: "0",
-                token: "1111",
-                value: value,
+                //type: "sendGroup",
+                //groupId: "0",
+                //token: "1111",
+                //value: value,
+                fromUserId:"3",
                 type:"GROUP_SENDING",
                 toGroupId:"0",
                 content:value,

@@ -23,7 +23,7 @@ public abstract class HandlerService implements HandlerApi {
      * HTTP获取在线用户数
      * @param channel {@link Channel} 链接实例
      */
-    public abstract void getSize(Channel channel);
+    public abstract Integer getSize(Channel channel);
 
     /**
      * HTTP以服务端向指定用户发送通知

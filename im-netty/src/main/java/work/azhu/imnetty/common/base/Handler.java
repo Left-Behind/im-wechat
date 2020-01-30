@@ -56,9 +56,12 @@ public abstract class Handler extends SimpleChannelInboundHandler<Object> {
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         log.info(LogConstant.CHANNELINACTIVE+ctx.channel().remoteAddress().toString()+LogConstant.CLOSE_SUCCESS);
         try {
-            handlerApi.close(ctx.channel());
+            if(ctx.channel().isOpen()){
+                handlerApi.close(ctx.channel());
+            }
+
         }catch (Exception e){
-            log.error(/*LogConstant.NOTFINDLOGINCHANNLEXCEPTION*/"关闭异常");
+            log.error(/*LogConstant.NOTFINDLOGINCHANNLEXCEPTION*/"Channel连接实例关闭异常");
         }
     }
 

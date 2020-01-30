@@ -1,5 +1,6 @@
 package work.azhu.imnetty.bootstrap.handler;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
@@ -93,12 +94,11 @@ public class DefaultHandler extends Handler {
 
     @Override
     protected void textdoMessage(ChannelHandlerContext ctx, TextWebSocketFrame msg) {
-        //将json格式小时存入Map对象
+        //将json格式存入Map对象
         Map<String,Object> maps = (Map) JSON.parse(msg.text());
-        System.out.println("输出msg信息");
-        System.out.println(maps.toString());
-        //添加消息时间戳
-        maps.put(ChatConstant.TIME, new Date());
+        log.info("[textdoMessage] 打印Websocket请求的信息");
+        log.info(JSON.toJSONString(maps, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
+                SerializerFeature.WriteDateUseDateFormat));
         switch((String)maps.get(ChatConstant.TYPE)){
             //登录到Netty服务器
             case ChatConstant.LOGIN:
@@ -111,10 +111,13 @@ public class DefaultHandler extends Handler {
                 handlerApi.sendToText(ctx.channel(),maps);
                 break;
             //发送消息到群组
-            case ChatConstant.SENDGROUP:
+            case ChatConstant.GROUP_SENDING:
+                log.info(LogConstant.DEFAULTWEBSOCKETHANDLER_SENDGROUP);
+                handlerApi.sendGroupText(ctx.channel(),maps);
                 break;
              //退出Netty服务器
             case ChatConstant.LOGOUT:
+                handlerApi.close(ctx.channel());
                 break;
             default:
                 break;

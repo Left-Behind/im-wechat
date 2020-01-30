@@ -23,13 +23,13 @@ public class LogConstant {
 
     public static final String DEFAULTWEBSOCKETHANDLER_SENDINCHAT = "[DefaultWebSocketHandler.httpdoMessage.SENDINCHAT]";
 
-    public static final String DEFAULTWEBSOCKETHANDLER_LOGIN = "[DefaultWebSocketHandler.textdoMessage.LOGIN]";
+    public static final String DEFAULTWEBSOCKETHANDLER_LOGIN = "[DefaultWebSocketHandler.textdoMessage.LOGIN-登录请求]";
 
     public static final String DEFAULTWEBSOCKETHANDLER_SENDME = "[DefaultWebSocketHandler.textdoMessage.SENDME]";
 
-    public static final String DefaultWebSocketHandler_SENDTO = "[DefaultWebSocketHandler.textdoMessage.SENDTO]";
+    public static final String DefaultWebSocketHandler_SENDTO = "[DefaultWebSocketHandler.textdoMessage.SENDTO-单体消息]";
 
-    public static final String DEFAULTWEBSOCKETHANDLER_SENDGROUP = "[DefaultWebSocketHandler.textdoMessage.SENDGROUP]";
+    public static final String DEFAULTWEBSOCKETHANDLER_SENDGROUP = "[DefaultWebSocketHandler.textdoMessage.SENDGROUP-群体消息]";
 
     public static final String CHANNELACTIVE = "[DefaultWebSocketHandler.channelActive]";
 

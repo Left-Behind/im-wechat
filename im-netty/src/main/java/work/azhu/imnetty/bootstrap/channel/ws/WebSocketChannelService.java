@@ -16,9 +16,9 @@ import java.util.Map;
 @Service
 public class WebSocketChannelService implements WsChannelService{
     @Override
-    public void loginWsSuccess(Channel channel, String token) {
-        WsCacheMap.saveWs(token,channel);
-        WsCacheMap.saveAd(channel.remoteAddress().toString(),token);
+    public void loginWsSuccess(Channel channel, String userId) {
+        WsCacheMap.saveWs(userId,channel);
+        WsCacheMap.saveAd(channel.remoteAddress().toString(),userId);
     }
 
     @Override

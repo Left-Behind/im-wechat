@@ -56,7 +56,7 @@
         window.WebSocket = window.MozWebSocket;
     }
     if (window.WebSocket) {
-        socket = new WebSocket("ws://127.0.0.1:8090/ws");
+        socket = new WebSocket("ws://127.0.0.1:8070/ws");
         console.log("该网页的IP地址: "+ip);
         socket.onmessage = function(event) {
             var ta = document.getElementById('responseText');
@@ -87,7 +87,7 @@
         if (socket.readyState == WebSocket.OPEN) {
             var message = {
                 type: "login",
-                token: "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMyIsInRpbWUiOjE1ODAyOTI2MTI3MTMsInVzZXJOYW1lIjoiQmVoaW5kIn0.mJaO99iR5csX2yLBsQnVD6L1uo893U11ZV7fL3MoUCg",
+                token: "eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMyIsInRpbWUiOjE1ODAzNjQ0MjY2OTEsInVzZXJOYW1lIjoiQmVoaW5kIn0.doBSbCDaIiRCbTm8oxuLRPF0TPlMEzBuZqvZQom8KpM",
                 ip: ip
             }
             socket.send(JSON.stringify(message));

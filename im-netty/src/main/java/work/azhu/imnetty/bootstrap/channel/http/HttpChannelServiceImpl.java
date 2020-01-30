@@ -109,7 +109,7 @@ public class HttpChannelServiceImpl implements HttpChannelService {
         String address = RedisUtil.getAddress(RedisUtil.convertMD5(WsCacheMap.getByJedis(userId)));
         String[] str = address.split(":");
         try {
-            HttpClient.getInstance().send(str[0],Integer.parseInt(str[1]),userId,msg);
+            HttpClient.getInstance().send(str[0],Integer.parseInt(str[1]),msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,9 +118,9 @@ public class HttpChannelServiceImpl implements HttpChannelService {
     @Override
     public void sendByInChat(Channel channel, SendInChat sendInChat) {
         Gson gson = new Gson();
-        Channel other = WsCacheMap.getByToken(sendInChat.getToken());
+        Channel otherChannel = WsCacheMap.getByToken(sendInChat.getToken());
         try {
-            other.writeAndFlush(new TextWebSocketFrame(gson.toJson(sendInChat.getFrame())));
+            otherChannel.writeAndFlush(new TextWebSocketFrame(gson.toJson(sendInChat.getFrame())));
         }catch (NullPointerException e){
             e.printStackTrace();
         }

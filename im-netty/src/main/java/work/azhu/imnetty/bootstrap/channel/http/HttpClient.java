@@ -1,5 +1,6 @@
 package work.azhu.imnetty.bootstrap.channel.http;
 
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
@@ -68,14 +69,13 @@ public class HttpClient {
         return instance;
     }
 
-    public void send(String host, int port, String token, Map value) throws Exception {
+    public void send(String host, int port, Map map) throws Exception {
         // Start the client.
         ChannelFuture f = this.bootstrap.connect(host, port).sync();
 
         URI uri = new URI(HttpConstant.URI_SENDINCHAT);
-
-        Gson gson = new Gson();
-        String content = gson.toJson(new SendInChat(token,value));
+        //消息对象转化为string传输
+        String content = JSON.toJSONString(map);
         DefaultFullHttpRequest request = new DefaultFullHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST,
                 uri.toASCIIString(), Unpooled.wrappedBuffer(content.getBytes(CharsetUtil.UTF_8)));
 

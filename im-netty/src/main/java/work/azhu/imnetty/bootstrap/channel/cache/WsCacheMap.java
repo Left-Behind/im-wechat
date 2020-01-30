@@ -46,6 +46,7 @@ public class WsCacheMap {
     public static void saveWs(String userId,Channel channel){
         maps.put(userId,channel);
         if (isDistributed){
+            //会把当前内网地址存放到
             jedis.set(userId, RedisUtil.convertMD5(address,userId));
         }
     }
@@ -119,14 +120,14 @@ public class WsCacheMap {
 
     /**
      * 判断是否存在链接账号
-     * @param token {@link String} 用户标识
+     * @param userId {@link String} 用户标识
      * @return {@link Boolean} 是否存在
      */
-    public static boolean hasToken(String token){
+    public static boolean hasToken(String userId){
         if (isDistributed){
-            return jedis.exists(token);
+            return jedis.exists(userId);
         }
-        return maps.containsKey(token);
+        return maps.containsKey(userId);
     }
 
     /**

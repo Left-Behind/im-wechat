@@ -42,15 +42,15 @@ public class JwtUtil {
     public static void main(String[] args) {
         String key="Azhu";
         Map<String,Object> map=new HashMap();
-        map.put("userName","Azhu");
+        map.put("userName","Behind");
         map.put("password","123");
         map.put("time",System.currentTimeMillis());
         System.out.println(JSON.toJSONString(map, SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
                 SerializerFeature.WriteDateUseDateFormat));
-        String ip="183.245.169.207";
+        String ip="183.245.168.212";
         String jwt="";
         System.out.println(encode(key,map,ip));
-        long start=System.currentTimeMillis();
+        /*long start=System.currentTimeMillis();
         for(int i=0;i<100;i++){
             long start1=System.currentTimeMillis();
             jwt=encode(key,map,ip);
@@ -63,8 +63,7 @@ public class JwtUtil {
             Map<String,Object> claims=decode(jwt,key,ip);
             end=System.currentTimeMillis();
             System.out.println("解码时间："+(end-start));
-        }
-
+        }*/
 
     }
 }
