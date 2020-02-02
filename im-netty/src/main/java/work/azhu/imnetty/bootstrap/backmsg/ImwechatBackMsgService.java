@@ -18,6 +18,11 @@ public interface ImwechatBackMsgService {
      */
     Message loginError();
 
+    /**
+     * 登录广播通知
+     * @return
+     */
+    Message loginNotify();
 
     /**
      * 发送给某人的信息

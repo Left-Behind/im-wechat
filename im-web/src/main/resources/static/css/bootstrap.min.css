@@ -5668,7 +5668,8 @@ a.thumbnail.active, a.thumbnail:focus, a.thumbnail:hover {
 
 .media-heading {
     margin-top: 0;
-    margin-bottom: 5px
+    margin-bottom: 5px;
+    width: 150px
 }
 
 .media-list {

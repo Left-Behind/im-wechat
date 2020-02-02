@@ -6,6 +6,8 @@ import work.azhu.imnetty.common.utils.RedisUtil;
 import work.azhu.imnetty.config.ConfigFactory;
 import work.azhu.imnetty.config.RedisConfig;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,6 +27,11 @@ public class WsCacheMap {
      * 存储链接地址与用户标识
      */
     private final static Map<String,String> addMaps = new ConcurrentHashMap<>();
+
+    /**
+     * 记录连接实列的token使用定时任务定时清除超时连接
+     */
+    private final static List<String> tokenList = new ArrayList<>();
 
     /**
      * Redis连接实例
@@ -134,7 +141,7 @@ public class WsCacheMap {
      * 获取在线用户标签列表
      * @return {@link Set} 标识列表
      */
-    public static Set<String> getTokenList(){
+    public static Set<String> getTokenSet(){
         if (isDistributed){
             return jedis.keys("*");
         }
@@ -144,5 +151,13 @@ public class WsCacheMap {
 
     public static String getByJedis(String token) {
         return jedis.get(token);
+    }
+
+    public static void saveTokenList(String token) {
+        tokenList.add(token);
+    }
+
+    public static List<String> getTokenList(){
+        return tokenList;
     }
 }

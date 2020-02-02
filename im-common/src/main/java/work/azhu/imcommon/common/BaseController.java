@@ -115,6 +115,8 @@ public class BaseController {
 		String ip= request.getHeader("x-forwarded-for");// 通过nginx转发的客户端ip
 		if(StringUtils.isBlank(ip)){
 			ip = request.getRemoteAddr();// 从request中获取ip
+			// 本机访问导致ip: 0:0:0:0:0:0:0:1
+			System.out.println(ip);
 			if(StringUtils.isBlank(ip)){
 				ip = "127.0.0.1";
 			}
@@ -130,10 +132,21 @@ public class BaseController {
 	 */
 	public String getJwt(String key, Map<String, Object> map) {
 		String ip =getIp();
-		System.out.println("ip: "+ip);
+		//System.out.println("ip: "+ip);
 		String jwtToken= JwtUtil.encode(key,map,ip);
 		CookieUtil.setCookie(request,response,"token",jwtToken,60*60*2,true);
 		return jwtToken;
+	}
+
+	/**
+	 * Jwt解码
+	 * @param key
+	 * @param token
+	 * @return
+	 */
+	public Map getMapByJwt(String key,String token){
+		String ip =getIp();
+		return JwtUtil.decode(token,key,ip);
 	}
 
 

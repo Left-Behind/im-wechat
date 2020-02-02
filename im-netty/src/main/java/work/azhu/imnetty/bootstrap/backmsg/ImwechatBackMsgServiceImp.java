@@ -27,6 +27,14 @@ public class ImwechatBackMsgServiceImp implements ImwechatBackMsgService{
     }
 
     @Override
+    public Message loginNotify() {
+        Message message = new Message();
+        message.setType(ChatConstant.NOTIFY);
+        message.setStatus(ChatConstant.SUCCESS);
+        return message;
+    }
+
+    @Override
     public Message sendTo(Map map) {
         return null;
     }
@@ -35,17 +43,18 @@ public class ImwechatBackMsgServiceImp implements ImwechatBackMsgService{
     public Message getMsg(Map map) {
         Message message = new Message();
 
-        String fromUserId = (String) map.get(ChatConstant.FROMUSERID);
-        String toUserId = (String) map.get(ChatConstant.TOUSERID);
-        String toGroupId = (String) map.get(ChatConstant.TOGROUPID);
+        String fromUserId = String.valueOf(map.get(ChatConstant.FROMUSERID));
+        String toUserId = String.valueOf(map.get(ChatConstant.TOUSERID));
+        String toGroupId = String.valueOf(map.get(ChatConstant.TOGROUPID));
         message.setFromUserId(Long.valueOf(fromUserId));
-        message.setType(ChatConstant.SINGLE_SENDING);
+        message.setType(String.valueOf(map.get(ChatConstant.TYPE)));
         message.setContent((String) map.get("content"));
         message.setFileUrl((String) map.get("fileUrl"));
         message.setOriginalFilename((String) map.get("originalFilename"));
-        message.setToUserId(Long.valueOf(toUserId==null?"0":toUserId));
-        message.setToGroupId(Long.valueOf(toGroupId==null?"0":toGroupId));
+        message.setToUserId(Long.valueOf(toUserId.equals("null")?"0":toUserId));
+        message.setToGroupId(0L);
         message.setCreateTime(new Date().getTime());
+        message.setStatus(ChatConstant.SUCCESS);
         return message;
     }
 

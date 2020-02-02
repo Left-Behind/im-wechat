@@ -27,6 +27,7 @@ import work.azhu.imnetty.common.constant.ChatConstant;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,7 +76,11 @@ public class HandlerServiceImp extends HandlerService {
     @Override
     public void sendInChat(Channel channel, FullHttpMessage msg) {
         Map<String,Object> maps = (Map) JSON.parse(msg.content().toString(CharsetUtil.UTF_8));
-        sendToText(channel,maps);
+        if(maps.get("type").equals(ChatConstant.NOTIFY)){
+            sendNotify(maps);
+        }else {
+            sendToText(channel,maps);
+        }
         close(channel);
     }
 
@@ -94,7 +99,7 @@ public class HandlerServiceImp extends HandlerService {
         User user=dubboUserService.verifyToken(token,ip);
         if (user!=null){
             //本地缓存保存,用户userId和channel对应
-            wsChannelService.loginWsSuccess(channel,user.getId().toString());
+            wsChannelService.loginWsSuccess(channel,user.getId().toString(),token);
             channel.writeAndFlush(new TextWebSocketFrame(JSONObject.toJSONString(imwechatBackMsgService.loginSuccess())));
             log.info(user.getUserName()+"从IP:"+ip+"成功登录----> Netty服务集群-"+nettyPort);
             return true;
@@ -139,8 +144,7 @@ public class HandlerServiceImp extends HandlerService {
 
     @Override
     public void sendGroupText(Channel channel, Map<String, Object> maps) {
-
-        String content =(String) maps.get(ChatConstant.CONTENT);
+        
         List<User> usersList = dubboUserService.queryUserDetailList();
         usersList.stream().forEach(item->{
                 String toUserId=item.getId().toString();
@@ -177,6 +181,42 @@ public class HandlerServiceImp extends HandlerService {
     @Override
     public void sendPhotoToMe(Channel channel, Map<String, Object> maps) {
 
+    }
+
+    @Override
+    public void loginNotify(Channel channel) {
+        List<User> usersList = dubboUserService.queryUserDetailList();
+        usersList.stream().forEach(item->{
+            String toUserId=item.getId().toString();
+            //发送给对方--在线
+            if (wsChannelService.hasOther(toUserId)){
+                //获得连接实列
+                Channel otherChannel = wsChannelService.getChannel(toUserId);
+                Map<String,Object> maps = new HashMap<>();
+                maps.put("type",ChatConstant.NOTIFY);
+                maps.put("status","success");
+                if (otherChannel == null){
+                    maps.put("toUserId",toUserId);
+                    log.info("本地无toUserId对应的连接实列Channel----------->转分布式(http),有用户登录广播");
+                    httpChannelService.sendInChat(toUserId,maps);
+                }else{
+                    otherChannel.writeAndFlush(new TextWebSocketFrame(
+                            JSONObject.toJSONString(imwechatBackMsgService.loginNotify())));
+                }
+            }
+         
+        });
+    }
+
+    @Override
+    public void sendNotify(Map<String, Object> maps) {
+        String toUserId = (String) maps.get(ChatConstant.TOUSERID);
+        if (wsChannelService.hasOther(toUserId)){
+            Channel otherChannel = wsChannelService.getChannel(toUserId);
+            //广播通知
+            otherChannel.writeAndFlush(new TextWebSocketFrame(
+                    JSONObject.toJSONString(imwechatBackMsgService.loginNotify())));
+        }
     }
 
     @Override

@@ -18,7 +18,7 @@ public interface WsChannelService {
      * @param channel {@link Channel} 链接实例
      * @param userId {@link String} 用户标识
      */
-    void loginWsSuccess(Channel channel, String userId);
+    void loginWsSuccess(Channel channel, String userId,String token);
 
     /**
      * 判断是否存在当前在线用户

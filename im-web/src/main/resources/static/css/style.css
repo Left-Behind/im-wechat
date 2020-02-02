@@ -5062,7 +5062,8 @@ a.compose-mail {
 }
 .feed-element,
 .media-body {
-  overflow: hidden;
+  width:75px;
+  overflow: hidden
 }
 .feed-element > .pull-left {
   margin-right: 10px;

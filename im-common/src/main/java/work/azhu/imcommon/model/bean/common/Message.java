@@ -18,6 +18,9 @@ public class Message implements Serializable {
     /**发送者*/
     private Long fromUserId;
 
+    /**发送者头像*/
+    private String fromAvatarUrl;
+
     /**接收者*/
     private Long toUserId;
 

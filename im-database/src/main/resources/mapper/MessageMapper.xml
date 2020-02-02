@@ -12,7 +12,13 @@
     </insert>
 
     <select id="queryMessageByUserId" resultType="work.azhu.imcommon.model.bean.common.Message">
-        SELECT * FROM imwechat.message WHERE fromUserId = #{userId} OR toUserId = #{userId}
+        SELECT
+                m.*,
+                avatarUrl AS fromAvatarUrl
+        FROM imwechat.message m
+        LEFT JOIN imwechat.user u ON u.id = m.fromUserId
+        WHERE
+        fromUserId = 3 OR toUserId = 3 OR toGroupId = 0
     </select>
 
     <select id="queryMessageByGroupId" resultType="work.azhu.imcommon.model.bean.common.Message">

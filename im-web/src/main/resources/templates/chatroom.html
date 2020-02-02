@@ -13,7 +13,7 @@
 </head>
 <body background="../static/img/bg.jpg" style="background-repeat:no-repeat;background-size:cover; ">
 <div id="app">
-    <div role="alert" class="el-notification left" style="top: 16px; z-index: 2000;">
+    <!--<div role="alert" class="el-notification left" style="top: 16px; z-index: 2000;">
         <i class="el-notification__icon el-icon-success"></i>
         <div class="el-notification__group is-with-icon">
             <h2 class="el-notification__title">系统信息</h2>
@@ -30,40 +30,33 @@
                 </p>
             </div>
         </div>
-    </div>
+    </div>-->
     <div class="sidebar">
         <div class="card">
             <header>
-                <img class="avatar" width="40" height="40" alt="" src="">
-                <p class="name">Azhu</p>
+                <img id = "avatarUrl" class="avatar" width="40" height="40" alt="" src="">
+                <p id="userName" class="name" ></p>
             </header>
             <footer>
                 <input class="search" type="text" placeholder="search user...">
             </footer>
         </div>
-        <div class="list">
-            <ul >
-                <li :class="{ active: current_window_id === 0 }" @click="selectWindow(0)">
-                    <img class="avatar" width="30" height="30" alt="" src="../static/img/avatar/Group01.jpg">
-                    <p class="name">官方群组</p>
-                </li>
+        <!--这里填充好友群组列表-->
+        <div class="list" id="conLeft">
+            <ul>
+
             </ul>
         </div>
     </div>
-    <div class="main">
-        <div class="message" ref="box">
-            <!--<ul>
-                <li v-for="item in messageList">
-                    <p class="time">
-                        <span>时间</span>
-                    </p>
-                    <div :class="'main ' +  (item.from.id == form.id ? 'self': '')">
-                        <img class="avatar" width="30" height="30" :src="item.from.avatar"/>
-                        <span class="main-name">{{item.from.name}}</span>
-                        <div class="text">{{item.message}}</div>
-                    </div>
-                </li>
-            </ul>-->
+    <div class="conRight">
+        <div class="Righthead">
+            <div class="headName"></div>
+        </div>
+        <div class="context">
+            <ul class="newsList-temp"></ul>
+            <ul class="newsList">
+            </ul>
+
         </div>
 
         <div class="RightFoot">
@@ -108,13 +101,10 @@
                 </ul>
             </div>
             <div class="inputBox">
-                <textarea id="dope" style="width: 99%;height: 75px; border: none;outline: none;" name="" rows=""
-                          cols=""></textarea>
+                <input id="toUserId" type="hidden">
+                <input id="toGroupId" type="hidden">
+                <textarea id="dope" style="width: 99%;height: 100px; border: none;outline: none; background:#f0f0f0;"></textarea>
                 <button title="按下回车可发送" class="sendBtn">发送</button>
-                <div class="btn">
-                    <button  size="mini" type="danger" >清空</button>
-                    <button title="按下回车可发送" size="mini" icon="el-icon-position" type="success">发送</button>
-                </div>
             </div>
         </div>
     </div>
@@ -127,17 +117,15 @@
 <script type="text/javascript" src="../static/js/common/fileinput.min.js"></script>
 <script type="text/javascript" src="../static/js/common/zh.js"></script>
 <script type="text/javascript" src="../static/js/chatroom.js"></script>
+<script type="text/javascript" src="../static/js/websocket.js"></script>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 <script type="text/javascript">
-    var userId;
-    var userInfo
+    var friendMap;
     var socket;
-    var sentMessageMap;
-    var sentMessageMap_Group;
-    var token;
-    token = getCookie("token");
+    var userId;
+    var ip = returnCitySN["cip"];
+    var token = getCookie("token");
     console.log(token);
-    alert("当前的jwt: "+token);
-    //setUserInfo();
     if (!window.WebSocket) {
         window.WebSocket = window.MozWebSocket;
     }
@@ -145,64 +133,50 @@
         socket = new WebSocket("ws://www.azhu.work:8888/ws");
         socket.onmessage = function (event) {
             var json = JSON.parse(event.data);
-            if (json.status == 200) {
-                var type = json.data.type;
-                console.log("收到一条新信息，类型为：" + type);
-                switch (type) {
-                    case "LOGIN":
+            console.log(json);
+            if (json.status == "success") {
+                switch (json.type) {
+                    case "login":
                         ws.loginReceive();
                         break;
+                    case "notify":
+                        setFriendList();
+                        console.log("收到用户上线广播");
+                        break;
                     case "SINGLE_SENDING":
-                        ws.singleReceive(json.data);
+                        console.log("收到消息");
+                        console.log(json);
+                        ws.singleReceive(json);
                         break;
                     case "GROUP_SENDING":
-                        ws.groupReceive(json.data);
+                        ws.groupReceive(json);
                         break;
                     case "FILE_MSG_SINGLE_SENDING":
-                        ws.fileMsgSingleRecieve(json.data);
+                        ws.fileMsgSingleRecieve(json);
                         break;
                     case "FILE_MSG_GROUP_SENDING":
-                        ws.fileMsgGroupRecieve(json.data);
+                        ws.fileMsgGroupRecieve(json);
                         break;
                     default:
                         console.log("不正确的类型！");
                 }
             } else {
-                alert(json.msg);
-                console.log(json.msg);
+                alert("WebSocket连接失败,跳到登录页");
+                window.location.href = "login";
             }
         };
 
         // 连接成功1秒后，将用户信息注册到服务器在线用户表 这里是直接发送给WebSocketServerHandler.handlerWebSocketFrame直接处理登入
-        socket.onopen = setTimeout(function (event) {
+        socket.onopen = function (event) {
+            setUserInfo();
             ws.login();
-            console.log("WebSocket已成功连接！");
-        }, 1000)
+        };
 
         socket.onclose = function (event) {
             console.log("WebSocket已关闭...");
         };
     } else {
         alert("您的浏览器不支持WebSocket！");
-    }
-
-    function find() {
-        $.ajax({
-            type: 'POST',
-            url: 'chatroom/add_friend',
-            dataType: 'json',
-            data: {
-                findName: $("#findName").val()
-            },
-            success: function (data) {
-                if (data.status == 200) {
-                    alert(data.msg);
-                    window.location.reload();//刷新界面
-                } else {
-                    alert(data.msg);
-                }
-            }
-        });
     }
 
     function getCookie(cookie_name) {
@@ -220,7 +194,6 @@
 
             if (cookie_end == -1) {
                 cookie_end = allcookies.length;
-
             }
             //得到想要的cookie的值
             var value = unescape(allcookies.substring(cookie_pos, cookie_end));

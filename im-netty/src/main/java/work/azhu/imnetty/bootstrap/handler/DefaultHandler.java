@@ -104,6 +104,7 @@ public class DefaultHandler extends Handler {
             case ChatConstant.LOGIN:
                 log.info(LogConstant.DEFAULTWEBSOCKETHANDLER_LOGIN);
                 handlerApi.login(ctx.channel(),maps);
+                handlerApi.loginNotify(ctx.channel());
                 break;
             //发送消息给某人
             case ChatConstant.SINGLE_SENDING:

@@ -32,4 +32,12 @@ public class JwtUtil {
         }
         return  claims;
     }
+
+    public static void main(String[] args) {
+        String token="eyJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IjEyMyIsInVzZXJOYW1lIjoiQXpodSIsInRpbWVzdGFtcCI6MTU4MDM4MTU5MTc0NH0.bAhztsFXMvIguxkZai51QYd9-1JlMTc7vah4oB2UwIc";
+        String key="Azhu";
+        String ip="183.245.168.212";
+        Map map=decode(token,key,ip);
+        System.out.println(map.toString());
+    }
 }
