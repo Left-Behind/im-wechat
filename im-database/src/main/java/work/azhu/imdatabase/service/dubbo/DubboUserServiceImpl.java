@@ -69,8 +69,11 @@ public class DubboUserServiceImpl implements DubboUserService {
 
     @Override
     public void insertUserDetail(User user) {
-        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
-        user.setId(idWorker.nextId());
+        //由于前端js无法保证16位以后的精度,修改id生成算法
+        //SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+        //Long id= idWorker.nextId()
+        Long id =System.currentTimeMillis();
+        user.setId(id);
         userMapper.insertUserDetail(user);
     }
 }
