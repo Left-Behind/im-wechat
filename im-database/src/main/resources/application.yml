@@ -55,13 +55,13 @@ custom:
       username: root
       password: root
     read1:
-      url: jdbc:mysql://www.azhu.work:13307/imwechat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
-      username: readOnly
-      password: readOnly
+      url: jdbc:mysql://www.azhu.work:13306/imwechat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
+      username: root
+      password: root
     read2:
-      url: jdbc:mysql://www.azhu.work:13308/imwechat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
-      username: readOnly
-      password: readOnly
+      url: jdbc:mysql://www.azhu.work:13306/imwechat?useSSL=false&useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
+      username: root
+      password: root
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml
