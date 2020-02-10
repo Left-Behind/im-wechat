@@ -18,7 +18,7 @@
         FROM imwechat.message m
         LEFT JOIN imwechat.user u ON u.id = m.fromUserId
         WHERE
-        fromUserId = 3 OR toUserId = 3 OR toGroupId = 0
+        fromUserId = #{userId} OR toUserId = #{userId} OR toGroupId = 0
     </select>
 
     <select id="queryMessageByGroupId" resultType="work.azhu.imcommon.model.bean.common.Message">
