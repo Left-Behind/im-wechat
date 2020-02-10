@@ -11,6 +11,7 @@ import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import work.azhu.imcommon.model.bean.common.Message;
 import work.azhu.imcommon.model.bean.common.User;
@@ -51,6 +52,9 @@ public class HandlerServiceImp extends HandlerService {
 
     @Resource
     private HttpChannelService httpChannelService;
+
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     @Reference(version = "${demo.service.version}")
     private DubboUserService dubboUserService;
@@ -135,12 +139,15 @@ public class HandlerServiceImp extends HandlerService {
             }
         }
         try {
-
-            //dataAsynchronousTask.writeData(maps);  这里还有待补充
+            //将消息扔入消息队列,交给database服务处理
+            Message message = imwechatBackMsgService.getMsg(maps);
+            dataAsynchronousTask(message);
         } catch (Exception e) {
             return;
         }
     }
+
+
 
     @Override
     public void sendGroupText(Channel channel, Map<String, Object> maps) {
@@ -164,8 +171,9 @@ public class HandlerServiceImp extends HandlerService {
                     }
                 }
                 try {
-
-                    //dataAsynchronousTask.writeData(maps);  这里还有待补充
+                    //将消息扔入消息队列,交给database服务处理
+                    Message message = imwechatBackMsgService.getMsg(maps);
+                    dataAsynchronousTask(message);
                 } catch (Exception e) {
                     return;
                 }
@@ -222,5 +230,10 @@ public class HandlerServiceImp extends HandlerService {
     @Override
     public void close(Channel channel) {
         wsChannelService.close(channel);
+    }
+    private void dataAsynchronousTask(Message message) {
+
+        log.info("netty放入database主题消息: " +JSONObject.toJSONString(message));
+        kafkaTemplate.send("database",JSONObject.toJSONString(message));
     }
 }
