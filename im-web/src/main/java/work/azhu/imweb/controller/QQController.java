@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import work.azhu.imcommon.common.BaseController;
 import work.azhu.imcommon.model.bean.common.User;
 import work.azhu.imcommon.service.DubboUserService;
@@ -118,8 +119,8 @@ public class QQController extends BaseController {
         jwtMap.put("password","");
         jwtMap.put("timestamp",System.currentTimeMillis());
         String jwt=getJwt(key,jwtMap);
+        System.out.println("回调请求的ip地址："+request.getRemoteAddr());
         //请求是第三方发送过来,response中存放cookies有问题
-        request.setAttribute("token", jwt);
         return "/chatroom1";
     }
 

@@ -44,10 +44,12 @@ public class IndexController extends BaseController {
     }
     @RequestMapping("chatroom1")
     public String chatroom1(){
-        String token = (String) request.getAttribute("token");
-        System.out.println(token);
+        String token1 = (String) request.getAttribute("token");
+        //CookieUtil.setCookie(request,response,"token",token,60*60*2,true);
+        String token=CookieUtil.getCookieValue(request,"token",true);
+        System.out.println("token1: "+token1);
         System.out.println("token: "+token);
-        return "templates/chatroom.html";
+        return "redirect:/chatroom";
     }
 
     @ApiOperation(value="用户登陆", notes="用户登陆")
