@@ -1,5 +1,6 @@
 package work.azhu.imweb.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import work.azhu.imcommon.common.BaseController;
+import work.azhu.imcommon.model.bean.common.User;
+import work.azhu.imcommon.service.DubboUserService;
 import work.azhu.imweb.config.auth.QQConfig;
 import work.azhu.imweb.util.QQHttpClient;
 
@@ -23,6 +26,9 @@ import java.util.Map;
  **/
 @Controller
 public class QQController extends BaseController {
+
+    @Reference(version = "${demo.service.version}")
+    private DubboUserService dubboUserService;
 
     @Value("${jwt.key}")
     private String key;
@@ -99,14 +105,22 @@ public class QQController extends BaseController {
         /*model.addAttribute("openid",openid);  //openid,用来唯一标识qq用户
         model.addAttribute("nickname",(String)jsonObject.get("nickname")); //QQ名
         model.addAttribute("figureurl_qq_2",(String)jsonObject.get("figureurl_qq_2")); //大小为100*100像素的QQ头像URL*/
-
+        User user = new User();
+        user.setAvatarUrl((String)jsonObject.get("figureurl_qq_2"));
+        user.setUserName((String)jsonObject.get("nickname"));
+        user.setToken(openid);
+        if(dubboUserService.queryUserByAccessToken(openid)==null){
+            dubboUserService.insertUserDetail(user);
+        }
         //跳转登录成功页
         Map<String,Object> jwtMap = new HashMap();
-        jwtMap.put("userName",(String)jsonObject.get("login"));
+        jwtMap.put("userName",user.getUserName());
         jwtMap.put("password","");
         jwtMap.put("timestamp",System.currentTimeMillis());
         String jwt=getJwt(key,jwtMap);
-        return "/chatroom";
+        //请求是第三方发送过来,response中存放cookies有问题
+        request.setAttribute("token", jwt);
+        return "/chatroom1";
     }
 
 }

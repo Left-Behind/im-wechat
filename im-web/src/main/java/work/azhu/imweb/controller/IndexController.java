@@ -42,6 +42,13 @@ public class IndexController extends BaseController {
         System.out.println("token: "+token);
         return "templates/chatroom.html";
     }
+    @RequestMapping("chatroom1")
+    public String chatroom1(){
+        String token = (String) request.getAttribute("token");
+        System.out.println(token);
+        System.out.println("token: "+token);
+        return "templates/chatroom.html";
+    }
 
     @ApiOperation(value="用户登陆", notes="用户登陆")
     @RequestMapping(value = "login",method = RequestMethod.POST)

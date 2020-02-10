@@ -1,5 +1,6 @@
 package work.azhu.imweb.controller;
 
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import work.azhu.imcommon.common.BaseController;
+import work.azhu.imcommon.model.bean.common.User;
+import work.azhu.imcommon.service.DubboUserService;
 import work.azhu.imweb.config.auth.SinaConfig;
 import work.azhu.imweb.util.SinaHttpClient;
 
@@ -27,6 +30,8 @@ public class SinaController extends BaseController {
     @Value("${jwt.key}")
     private String key;
 
+    @Reference(version = "${demo.service.version}")
+    private DubboUserService dubboUserService;
 
     @RequestMapping("sina/toLogin")
     public String sina(HttpSession session){
@@ -60,11 +65,21 @@ public class SinaController extends BaseController {
         model.addAttribute("nickname", userInfo.get("screen_name"));
         model.addAttribute("figureurl_qq_2", userInfo.get("profile_image_url"));
         return "success";*/
+
+        User user = new User();
+        user.setAvatarUrl((String)userInfo.get("profile_image_url"));
+        user.setUserName((String)userInfo.get("screen_name"));
+        user.setToken((String)jsonObject.get("access_token"));
+        if(dubboUserService.queryUserByAccessToken(user.getToken())==null){
+            dubboUserService.insertUserDetail(user);
+        }
+
         Map<String,Object> jwtMap = new HashMap();
-        jwtMap.put("userName",(String)jsonObject.get("login"));
+        jwtMap.put("userName",user.getUserName());
         jwtMap.put("password","");
         jwtMap.put("timestamp",System.currentTimeMillis());
         String jwt=getJwt(key,jwtMap);
-        return "/chatroom";
+        request.setAttribute("token", jwt);
+        return "/chatroom1";
     }
 }
