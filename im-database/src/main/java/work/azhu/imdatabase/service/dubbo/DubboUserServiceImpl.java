@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 import work.azhu.imcommon.model.bean.common.User;
 import work.azhu.imcommon.service.DubboUserService;
 import work.azhu.imcommon.util.JwtUtil;
+import work.azhu.imcommon.util.SnowflakeIdWorker;
 import work.azhu.imdatabase.mapper.UserMapper;
 
 import java.util.List;
@@ -64,5 +65,12 @@ public class DubboUserServiceImpl implements DubboUserService {
             return userMapper.queryUserByUserName(userName);
         }
         return null;
+    }
+
+    @Override
+    public void insertUserDetail(User user) {
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+        user.setId(idWorker.nextId());
+        userMapper.insertUserDetail(user);
     }
 }

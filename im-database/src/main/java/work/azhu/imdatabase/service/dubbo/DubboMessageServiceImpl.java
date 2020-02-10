@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import work.azhu.imcommon.model.bean.common.Message;
 import work.azhu.imcommon.service.DubboMessageService;
+import work.azhu.imcommon.util.SnowflakeIdWorker;
 import work.azhu.imdatabase.mapper.MessageMapper;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public class DubboMessageServiceImpl implements DubboMessageService {
 
     @Override
     public Long insertMessage(Message message) {
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker(0, 0);
+        message.setId(idWorker.nextId());
         return messageMapper.insertMessage(message);
     }
 
