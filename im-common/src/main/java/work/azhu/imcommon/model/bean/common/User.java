@@ -33,4 +33,10 @@ public class User implements Serializable {
 
     /**更新时间*/
     private Date updateTime;
+
+    /**用户类型*/
+    private Integer type;
+
+    /**第三方登陆标识*/
+    private String token;
 }

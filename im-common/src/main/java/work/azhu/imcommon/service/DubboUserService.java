@@ -55,4 +55,7 @@ public interface DubboUserService {
      * @return
      */
     User verifyToken(String token,String ip);
+
+
+    void insertUserDetail(User user);
 }
