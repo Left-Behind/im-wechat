@@ -19,6 +19,7 @@
         LEFT JOIN imwechat.user u ON u.id = m.fromUserId
         WHERE
         fromUserId = #{userId} OR toUserId = #{userId} OR m.type = "FILE_MSG_SINGLE_SENDING" OR m.type = "FILE_MSG_GROUP_SENDING"
+        ORDER BY m.createTime
     </select>
 
     <select id="queryMessageByGroupId" resultType="work.azhu.imcommon.model.bean.common.Message">

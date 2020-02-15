@@ -116,6 +116,7 @@ public class BaseController {
 		if(StringUtils.isBlank(ip)){
 			ip = request.getRemoteAddr();// 从request中获取ip
 			// 本机访问导致ip: 0:0:0:0:0:0:0:1
+			//ip="183.245.168.212";
 			System.out.println(ip);
 			if(StringUtils.isBlank(ip)){
 				ip = "127.0.0.1";

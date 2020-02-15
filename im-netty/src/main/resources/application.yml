@@ -1,5 +1,5 @@
 server:
-  port: 9002
+  port: 9003
 spring:
   thymeleaf:
     prefix: classpath:/templates/
@@ -43,7 +43,7 @@ dubbo:
     name: dubbo-netty
   protocol:
     name: dubbo
-    port: 20882
+    port: 20888
   registry:
     address: zookeeper://www.azhu.work:2181
   provider:

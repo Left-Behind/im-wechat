@@ -59,7 +59,8 @@ var ws = {//登入函数 将用户信息注入Constant.onlineUserMap对象
                 "toUserId": toUserId,
                 "originalFilename": originalFilename,
                 "fileUrl": fileUrl,
-                "type": "FILE_MSG_SINGLE_SENDING"
+                "type": "FILE_MSG_SINGLE_SENDING",
+                "content":"[文件]"
             };
             socket.send(JSON.stringify(data));
         } else {
@@ -77,7 +78,8 @@ var ws = {//登入函数 将用户信息注入Constant.onlineUserMap对象
                 "toGroupId": toGroupId,
                 "originalFilename": originalFilename,
                 "fileUrl": fileUrl,
-                "type": "FILE_MSG_GROUP_SENDING"
+                "type": "FILE_MSG_GROUP_SENDING",
+                "content":"[文件]"
             };
             socket.send(JSON.stringify(data));
         } else {
@@ -178,7 +180,6 @@ var ws = {//登入函数 将用户信息注入Constant.onlineUserMap对象
             '<div class="media">' +
             '<div class="media-body"> ' +
             '<h5 class="media-heading">' + originalFilename + '</h5>' +
-            '<span>' + fileSize + '</span>' +
             '</div>' +
             '<a href="' + fileUrl + '" class="media-right" target="_blank">' +
             '<i class="glyphicon glyphicon-file" style="font-size:28pt;"></i>' +
@@ -206,11 +207,14 @@ var ws = {//登入函数 将用户信息注入Constant.onlineUserMap对象
         fromAvatarUrl = friendMap.get(fromUserId).avatarUrl;
         var selectGroupId = $('#toGroupId').val();
         var flag = false;
-        if(selectGroupId == toGroupId){
+        if(selectGroupId == toGroupId && selectGroupId!=""){
             flag = true;
         }
+        console.log(selectGroupId);
+        console.log(toGroupId);
+        console.log(flag);
         var $receiveLi;
-        $('.conLeft').find('span.hidden-groupId').each(function () {
+        $('#conLeft').find('span.hidden-groupId').each(function () {
             if (this.innerHTML == toGroupId) {
                 $receiveLi = $(this).parent(".liLeft").parent("li");
             }

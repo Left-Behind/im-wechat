@@ -170,14 +170,15 @@ public class HandlerServiceImp extends HandlerService {
                                 JSONObject.toJSONString(imwechatBackMsgService.getMsg(maps))));
                     }
                 }
-                try {
-                    //将消息扔入消息队列,交给database服务处理
-                    Message message = imwechatBackMsgService.getMsg(maps);
-                    dataAsynchronousTask(message);
-                } catch (Exception e) {
-                    return;
-                }
+
             });
+            try {
+                //将消息扔入消息队列,交给database服务处理
+                Message message = imwechatBackMsgService.getMsg(maps);
+                dataAsynchronousTask(message);
+            } catch (Exception e) {
+                return;
+            }
 
     }
 

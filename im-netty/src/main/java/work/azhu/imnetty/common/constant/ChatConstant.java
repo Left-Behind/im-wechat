@@ -64,4 +64,6 @@ public class ChatConstant {
 
 
     public static final String NOTIFY = "notify";
+    public static final String FILE_MSG_SINGLE_SENDING = "FILE_MSG_SINGLE_SENDING";
+    public static final String FILE_MSG_GROUP_SENDING = "FILE_MSG_GROUP_SENDING";
 }
