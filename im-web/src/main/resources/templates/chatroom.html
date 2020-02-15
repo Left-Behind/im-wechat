@@ -108,6 +108,33 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="upload-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title text-primary">文件上传</h3>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">选择文件</label>
+                            <div class="col-sm-9">
+                                <input type="file" name="file"
+                                       class="col-sm-9 myfile"/>
+                                <p class="help-block">注意：文件大小不超过30M，有效期为7天</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="upload-cancel" class="btn btn-sm btn-muted" data-dismiss="modal">
+                        <i class="glyphicon glyphicon-remove"></i> 取消
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 

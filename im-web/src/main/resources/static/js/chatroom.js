@@ -233,7 +233,7 @@ function setHistoryMessage() {
 }
 
 $(".myfile").fileinput({
-    uploadUrl: "chatroom/upload",
+    uploadUrl: "imwechat/upload",
     uploadAsync: true, //默认异步上传
     showUpload: true, //是否显示上传按钮,跟随文本框的那个
     showRemove: false, //显示移除按钮,跟随文本框的那个
@@ -258,16 +258,18 @@ $('.myfile').on('fileerror', function (event, data, msg) {
 $(".myfile").on("fileuploaded", function (event, data, previewId, index) {
 
     // 1. 上传成功1.5秒后自动关闭上传模态框
-    console.log("fileuploaded");
+    //console.log("fileuploaded");
     setTimeout(function () {
         $('#upload-cancel').trigger('click');
         $('.fileinput-remove').trigger('click');
     }, 1500);
 
     // 2. 获取、设置参数
-    var returnData = data.response.data;
+    /*console.log(data);
+    console.log(data.response);
+    console.log(data.response.result);*/
+    var returnData = data.response.result;
     var originalFilename = returnData.originalFilename;
-    var fileSize = returnData.fileSize;
     var fileUrl = returnData.fileUrl;
     var content = "[文件]";
     var fromUserId = userId;
@@ -284,7 +286,6 @@ $(".myfile").on("fileuploaded", function (event, data, previewId, index) {
         '</a>' +
         '<div class="media-body"> ' +
         '<h5 class="media-heading">' + originalFilename + '</h5>' +
-        '<span>' + fileSize + '</span>' +
         '</div>' +
         '</div>' +
         '</div>' +
@@ -293,9 +294,9 @@ $(".myfile").on("fileuploaded", function (event, data, previewId, index) {
 
     // 3. 发送信息到服务器
     if (toUserId.length != 0) {
-        ws.fileMsgSingleSend(fromUserId, toUserId, originalFilename, fileUrl, fileSize);
+        ws.fileMsgSingleSend(fromUserId, toUserId, originalFilename, fileUrl, 0);
     } else {
-        ws.fileMsgGroupSend(fromUserId, toGroupId, originalFilename, fileUrl, fileSize);
+        ws.fileMsgGroupSend(fromUserId, toGroupId, originalFilename, fileUrl, 0);
     }
 
     // 4. 消息框处理：
