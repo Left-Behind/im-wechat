@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import work.azhu.imcommon.common.BaseController;
 import work.azhu.imcommon.model.bean.common.User;
 import work.azhu.imcommon.service.DubboUserService;
 import work.azhu.imweb.config.qiniu.QiNiuProperties;
@@ -31,7 +32,7 @@ import java.util.Map;
  */
 @Api("七牛云上传")
 @Controller
-public class QiNiuCloudControoler {
+public class QiNiuCloudControoler extends BaseController {
 
     @Autowired
     QiNiuService qiNiuService;
@@ -91,4 +92,23 @@ public class QiNiuCloudControoler {
 
     }
 
+    @RequestMapping(value = "/imwechat/upload",method = RequestMethod.POST)
+    @ResponseBody
+    public String upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+        InputStream inputStream = file.getInputStream();
+        Response uploadFile = qiNiuService.uploadFile(inputStream,file.getOriginalFilename());
+        boolean ok = uploadFile.isOK();
+        if (ok == true) {
+            System.out.println(file.getOriginalFilename() + "上传成功! ");
+        }
+        StringMap jsonToMap = uploadFile.jsonToMap();
+        jsonToMap.put("size", file.getSize());
+        jsonToMap.put("path", qiNiuProperties.getPath());
+        Map<String, Object> map = jsonToMap.map();
+
+        map.put("originalFilename",jsonToMap.get("key").toString());
+        map.put("fileUrl","http://www.image.azhu.work/"+jsonToMap.get("key").toString());
+        return resSuccessJson(map);
+
+    }
 }
