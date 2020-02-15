@@ -111,8 +111,18 @@ public class DefaultHandler extends Handler {
                 log.info(LogConstant.DefaultWebSocketHandler_SENDTO);
                 handlerApi.sendToText(ctx.channel(),maps);
                 break;
+            //发送消息给某人(文件)
+            case ChatConstant.FILE_MSG_SINGLE_SENDING:
+                log.info(LogConstant.DefaultWebSocketHandler_SENDTO);
+                handlerApi.sendToText(ctx.channel(),maps);
+                break;
             //发送消息到群组
             case ChatConstant.GROUP_SENDING:
+                log.info(LogConstant.DEFAULTWEBSOCKETHANDLER_SENDGROUP);
+                handlerApi.sendGroupText(ctx.channel(),maps);
+                break;
+            //发送消息到群组(文件)
+            case ChatConstant.FILE_MSG_GROUP_SENDING:
                 log.info(LogConstant.DEFAULTWEBSOCKETHANDLER_SENDGROUP);
                 handlerApi.sendGroupText(ctx.channel(),maps);
                 break;
